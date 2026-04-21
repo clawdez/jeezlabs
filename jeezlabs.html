@@ -1,0 +1,922 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>jeezlabs — index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" />
+<style>
+  :root {
+    --bg: #050505;
+    --fg: #f3efe6;
+    --dim: #7a766d;
+    --dimmer: #3a3731;
+    --accent: #e8e2d3;
+    --warn: #d9ff4b;
+    --hot: #ff5a3c;
+    --grid: rgba(255,255,255,0.04);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--fg); }
+  body {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 13px;
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* subtle noise overlay */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.35'/></svg>");
+    opacity: 0.10;
+    pointer-events: none;
+    z-index: 100;
+    mix-blend-mode: screen;
+  }
+
+  /* ============ top chrome bar ============ */
+  .chrome {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 50;
+    font-size: 11px;
+    pointer-events: none;
+  }
+  .chrome > * { pointer-events: auto; }
+  .chrome .left, .chrome .right { display: flex; gap: 28px; }
+  .chrome .mark {
+    font-family: "Instrument Serif", serif;
+    font-size: 22px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .chrome .mark em { font-style: italic; }
+  .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--warn);
+    margin-right: 6px;
+    vertical-align: middle;
+    animation: blink 2.4s infinite;
+  }
+  @keyframes blink { 0%, 60% { opacity: 1; } 70%, 100% { opacity: 0.2; } }
+  .kbd {
+    border: 1px solid var(--dimmer);
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-size: 10px;
+    color: var(--dim);
+  }
+
+  /* ============ hero ============ */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 720px;
+    overflow: hidden;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    padding: 80px 48px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 16px;
+    color: var(--fg);
+  }
+  .hero-overlay > * { pointer-events: auto; }
+
+  .badge {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .tl-a { grid-column: 1; grid-row: 1; }
+  .tl-b { grid-column: 2; grid-row: 1; text-align: center; }
+  .tl-c { grid-column: 3; grid-row: 1; text-align: right; }
+  .bl-a { grid-column: 1; grid-row: 3; align-self: end; }
+  .bl-b { grid-column: 2; grid-row: 3; align-self: end; text-align: center; }
+  .bl-c { grid-column: 3; grid-row: 3; align-self: end; text-align: right; }
+
+  .clock {
+    font-variant-numeric: tabular-nums;
+    display: flex; align-items: baseline; gap: 10px;
+  }
+  .clock .big {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 64px;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+  }
+  .clock .lbl { color: var(--dim); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }
+
+  .hero-title {
+    grid-column: 1 / -1; grid-row: 2;
+    align-self: end;
+    justify-self: start;
+    pointer-events: none;
+    padding-bottom: 24px;
+  }
+  .hero-title .eyebrow {
+    font-size: 11px; color: var(--dim);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .hero-title h1 {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: clamp(56px, 9vw, 132px);
+    line-height: 0.88;
+    letter-spacing: -0.035em;
+    max-width: 12ch;
+  }
+  .hero-title h1 em {
+    font-style: italic;
+    color: var(--dim);
+  }
+  .hero-title h1 .amp {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    color: var(--warn);
+  }
+
+  /* scattered card pile */
+  .pile {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1800px;
+  }
+  .pile-stage {
+    position: relative;
+    width: 560px;
+    height: 560px;
+    transform-style: preserve-3d;
+    animation: float 18s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: rotateX(4deg) rotateY(-2deg) translateY(0); }
+    50%      { transform: rotateX(-2deg) rotateY(3deg) translateY(-10px); }
+  }
+
+  .card {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 180px;
+    height: 240px;
+    margin-left: -90px;
+    margin-top: -120px;
+    background: #0a0a0a;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02) inset;
+    overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.5s, z-index 0s;
+    cursor: pointer;
+    will-change: transform;
+  }
+  .card .inner {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background-size: cover;
+    background-position: center;
+  }
+  .card .tag {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.78);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    align-self: flex-start;
+    background: rgba(0,0,0,0.5);
+    padding: 2px 6px;
+    backdrop-filter: blur(4px);
+  }
+  .card .meta {
+    display: flex; justify-content: space-between;
+    font-size: 9px;
+    color: rgba(255,255,255,0.7);
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  }
+  .card:hover {
+    transform: translate(var(--tx), var(--ty)) rotate(0deg) translateZ(120px) scale(1.12) !important;
+    z-index: 999 !important;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.15) inset;
+  }
+
+  /* card content variants — placeholder art */
+  .art-1 { background:
+    radial-gradient(circle at 30% 20%, #ff5a3c, transparent 40%),
+    radial-gradient(circle at 70% 80%, #3b2a5e, transparent 50%),
+    linear-gradient(135deg, #1a0f0a, #0a0a15); }
+  .art-2 { background:
+    repeating-linear-gradient(45deg, #0a2b1f 0 4px, #134d2f 4px 8px),
+    #0a2b1f; }
+  .art-3 { background:
+    radial-gradient(circle at 50% 60%, #d9ff4b 0 20%, transparent 21%),
+    linear-gradient(180deg, #1a1a1a, #000); }
+  .art-4 { background:
+    conic-gradient(from 45deg, #6b2c91, #c44569, #f79f1f, #6b2c91);
+    filter: saturate(0.85); }
+  .art-5 { background:
+    linear-gradient(180deg, #1e3a5f 0%, #0b1829 100%),
+    repeating-linear-gradient(90deg, transparent 0 20px, rgba(255,255,255,0.05) 20px 21px); }
+  .art-6 { background:
+    radial-gradient(ellipse at top, #8b1538, transparent 60%),
+    linear-gradient(0deg, #2c0515, #1a0208); }
+  .art-7 { background:
+    linear-gradient(135deg, #f0ead6 0%, #d4c7a1 100%);
+    color: #222 !important;
+  }
+  .art-7 .tag, .art-7 .meta { color: #2a2a2a; text-shadow: none; background: rgba(255,255,255,0.6); }
+  .art-8 { background:
+    radial-gradient(circle at 20% 30%, rgba(217,255,75,0.6), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(107,44,145,0.8), transparent 45%),
+    #000; }
+  .art-9 { background:
+    repeating-linear-gradient(0deg, #0a0a0a 0 3px, #151515 3px 6px); }
+  .art-9::after {
+    content: "";
+    position: absolute; inset: 20% 30%;
+    background: radial-gradient(circle, #ff5a3c 0 30%, transparent 70%);
+    filter: blur(15px);
+  }
+  .art-10 { background:
+    linear-gradient(135deg, #0a1a0a 0%, #2d5016 50%, #1a3008 100%); }
+  .art-11 { background:
+    linear-gradient(180deg, #1a1a2e, #16213e);
+    position: relative; }
+  .art-11::after {
+    content: "◐"; position: absolute;
+    font-size: 140px; color: #e8e2d3;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: serif;
+  }
+  .art-12 { background:
+    conic-gradient(from 0deg at 50% 50%, #000 0deg, #d9ff4b 90deg, #000 180deg, #ff5a3c 270deg, #000 360deg);
+    filter: contrast(1.2); }
+
+  /* ============ vertical ticker side ============ */
+  .ticker-side {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 28px;
+    z-index: 4;
+    border-left: 1px solid var(--dimmer);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    writing-mode: vertical-rl;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+  .ticker-side .stream {
+    animation: slide 40s linear infinite;
+  }
+  @keyframes slide {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+  }
+
+  /* ============ sections ============ */
+  section.slab {
+    position: relative;
+    border-top: 1px solid var(--dimmer);
+    padding: 80px 48px;
+  }
+
+  /* works index */
+  .works-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    margin-bottom: 48px;
+    gap: 24px;
+  }
+  .works-header h2 {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: clamp(40px, 5vw, 72px);
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+  }
+  .works-header .count {
+    color: var(--dim);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .works-list {
+    border-top: 1px solid var(--dimmer);
+  }
+  .work-row {
+    display: grid;
+    grid-template-columns: 48px 1fr 180px 120px 100px 14px;
+    gap: 24px;
+    align-items: center;
+    padding: 22px 4px;
+    border-bottom: 1px solid var(--dimmer);
+    cursor: pointer;
+    transition: background 0.2s, padding 0.3s;
+    position: relative;
+  }
+  .work-row:hover { background: rgba(255,255,255,0.02); padding-left: 14px; }
+  .work-row .idx { color: var(--dim); font-size: 11px; font-variant-numeric: tabular-nums; }
+  .work-row .title {
+    font-family: "Instrument Serif", serif;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .work-row .title em { font-style: italic; color: var(--dim); }
+  .work-row .kind,
+  .work-row .year,
+  .work-row .status { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; text-transform: uppercase; }
+  .work-row .status .dot-mini { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--warn); margin-right: 6px; vertical-align: 1px; }
+  .work-row .status.live .dot-mini { background: var(--warn); }
+  .work-row .status.ship .dot-mini { background: var(--fg); }
+  .work-row .status.draft .dot-mini { background: var(--hot); }
+  .work-row .arrow {
+    color: var(--dim);
+    font-size: 14px;
+    transform: translateX(-6px);
+    transition: transform 0.3s, color 0.3s;
+  }
+  .work-row:hover .arrow { transform: translateX(0); color: var(--fg); }
+
+  /* hover preview */
+  .work-preview {
+    position: absolute;
+    right: 200px;
+    top: 50%;
+    transform: translate(20px, -50%) scale(0.95);
+    width: 160px;
+    height: 200px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s, transform 0.25s;
+    border: 1px solid rgba(255,255,255,0.15);
+    z-index: 5;
+  }
+  .work-row:hover .work-preview { opacity: 1; transform: translate(0, -50%) scale(1); }
+
+  /* ============ about ============ */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    padding: 120px 48px;
+    border-top: 1px solid var(--dimmer);
+  }
+  .about h2 {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: clamp(44px, 6vw, 96px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+  }
+  .about h2 em { font-style: italic; color: var(--dim); }
+  .about .copy {
+    font-family: "Newsreader", serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #d9d4c8;
+    max-width: 52ch;
+  }
+  .about .copy p + p { margin-top: 1.2em; }
+  .about .copy em { font-style: italic; color: var(--dim); }
+
+  .duo {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .person {
+    border: 1px solid var(--dimmer);
+    padding: 16px;
+    position: relative;
+  }
+  .person .avatar {
+    aspect-ratio: 1;
+    background: repeating-linear-gradient(45deg, #111 0 6px, #1a1a1a 6px 12px);
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .person .avatar::after {
+    content: attr(data-init);
+    position: absolute;
+    inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 72px;
+    color: var(--fg);
+    opacity: 0.85;
+  }
+  .person .name {
+    font-family: "Instrument Serif", serif;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+  .person .role { font-size: 10px; color: var(--dim); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 2px; }
+  .person .links { margin-top: 10px; display: flex; gap: 12px; font-size: 11px; }
+  .person .links a { color: var(--dim); }
+  .person .links a:hover { color: var(--fg); }
+
+  /* ============ contact ============ */
+  .contact {
+    padding: 120px 48px 60px;
+    border-top: 1px solid var(--dimmer);
+    text-align: center;
+  }
+  .contact .line {
+    font-family: "Instrument Serif", serif;
+    font-size: clamp(40px, 8vw, 120px);
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+  }
+  .contact .line em { font-style: italic; color: var(--dim); }
+  .contact .email {
+    display: inline-block;
+    margin-top: 24px;
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: clamp(32px, 5vw, 64px);
+    color: var(--warn);
+    border-bottom: 1px solid var(--warn);
+    padding-bottom: 4px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .contact .email:hover { color: var(--fg); border-color: var(--fg); }
+
+  .foot {
+    padding: 24px 48px;
+    border-top: 1px solid var(--dimmer);
+    display: flex;
+    justify-content: space-between;
+    color: var(--dim);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* ============ tweaks panel ============ */
+  #tweaks-panel {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    width: 260px;
+    background: #0b0b0b;
+    border: 1px solid var(--dimmer);
+    padding: 14px;
+    z-index: 500;
+    font-size: 11px;
+    display: none;
+  }
+  #tweaks-panel.open { display: block; }
+  #tweaks-panel h4 {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 12px;
+    display: flex; justify-content: space-between;
+  }
+  #tweaks-panel .tweak { margin-bottom: 10px; }
+  #tweaks-panel label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 4px;
+  }
+  #tweaks-panel .row { display: flex; gap: 4px; flex-wrap: wrap; }
+  #tweaks-panel button.opt {
+    flex: 1;
+    padding: 6px 8px;
+    background: transparent;
+    border: 1px solid var(--dimmer);
+    color: var(--fg);
+    font-family: inherit;
+    font-size: 10px;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  #tweaks-panel button.opt.active { background: var(--fg); color: #000; border-color: var(--fg); }
+  #tweaks-panel button.opt:hover:not(.active) { border-color: var(--fg); }
+
+  /* theme: paper */
+  body.paper {
+    --bg: #e8e3d5;
+    --fg: #1a1815;
+    --dim: #8a8478;
+    --dimmer: #c0b9a8;
+    --grid: rgba(0,0,0,0.04);
+  }
+  body.paper .card { background: #fff; border-color: rgba(0,0,0,0.1); }
+  body.paper #tweaks-panel { background: #f5f1e4; }
+  body.paper .person .avatar { background: repeating-linear-gradient(45deg, #d8d2c2 0 6px, #e5dfd0 6px 12px); }
+
+  /* arrangement: grid */
+  body.arr-grid .pile-stage { animation: none; transform: none; }
+  body.arr-grid .card { transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important; }
+
+  /* hero mode: minimal (hide pile) */
+  body.hero-minimal .pile { opacity: 0.12; filter: blur(1px); }
+
+</style>
+</head>
+<body>
+
+<!-- ============ TOP CHROME ============ -->
+<div class="chrome">
+  <div class="left">
+    <div class="mark">jeez<em>labs</em></div>
+    <div style="color: var(--dim); align-self: center;"><span class="dot"></span>live · idx/001</div>
+  </div>
+  <div class="right">
+    <a href="#works">works</a>
+    <a href="#about">about</a>
+    <a href="#contact">contact</a>
+    <span style="color: var(--dim);" id="now-date">—</span>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+
+  <!-- scattered pile -->
+  <div class="pile">
+    <div class="pile-stage" id="pile-stage">
+      <!-- 12 cards, positioned by JS -->
+    </div>
+  </div>
+
+  <!-- overlay chrome -->
+  <div class="hero-overlay">
+
+    <div class="tl-a">
+      <div class="badge">currently shipping</div>
+      <div style="margin-top: 6px; font-family: 'Instrument Serif', serif; font-size: 20px; font-style: italic;">
+        3 live · 2 in-studio
+      </div>
+    </div>
+
+    <div class="tl-b">
+      <div class="badge">session</div>
+      <div class="clock" style="justify-content: center; margin-top: 4px;">
+        <span class="big" id="clock">:00:00</span>
+      </div>
+    </div>
+
+    <div class="tl-c">
+      <div class="badge">jzl · 02</div>
+      <div style="margin-top: 6px; color: var(--dim); font-size: 11px;">
+        est. 2024 / tpe · sf
+      </div>
+    </div>
+
+    <!-- big title -->
+    <div class="hero-title">
+      <div class="eyebrow">jeezlabs — a two-person studio</div>
+      <h1>
+        small <em>things</em>,<br/>
+        made <span class="amp">&amp;</span> shipped<br/>
+        <em>mostly</em> on weekends.
+      </h1>
+    </div>
+
+    <div class="bl-a">
+      <div class="badge">works idx</div>
+      <div style="color: var(--dim); font-size: 11px; margin-top: 4px;">↓ scroll · 12 entries</div>
+    </div>
+
+    <div class="bl-b">
+      <div class="badge">manifest</div>
+      <div style="color: var(--dim); font-size: 11px; margin-top: 4px; font-style: italic; font-family: 'Instrument Serif', serif; font-size: 16px;">
+        "if it's dumb and it works, it isn't dumb"
+      </div>
+    </div>
+
+    <div class="bl-c">
+      <div class="badge" id="today-label">tomorrow 15.00 pm</div>
+      <div style="color: var(--dim); font-size: 11px; margin-top: 4px;" id="today-date">17/06/2025</div>
+    </div>
+  </div>
+
+  <!-- right vertical ticker -->
+  <div class="ticker-side">
+    <div class="stream">
+      JEEZLABS · INDEX/001 · WE MAKE THINGS · WE SHIP THINGS · WE BREAK THINGS · JEEZLABS · INDEX/001 · WE MAKE THINGS · WE SHIP THINGS · WE BREAK THINGS ·
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORKS ============ -->
+<section class="slab" id="works">
+  <div class="works-header">
+    <h2>the <em>works</em>.</h2>
+    <div class="count">012 entries · sorted by recency ↓</div>
+  </div>
+
+  <div class="works-list" id="works-list">
+    <!-- rendered by JS -->
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="about" id="about">
+  <div>
+    <h2>two <em>friends.</em><br/>one <em>workshop.</em><br/>many <em>small</em> things.</h2>
+  </div>
+  <div class="copy">
+    <p>jeezlabs is a <em>two-person</em> studio that makes software, sketches, and occasional physical objects — mostly on weekends, mostly for the fun of it.</p>
+    <p>we're interested in <em>tools that feel like toys</em>, interfaces that behave like instruments, and the kind of small weird things that would never survive a product roadmap.</p>
+    <p>we ship when it's ready. sometimes that's a tuesday. sometimes it's <em>never.</em></p>
+
+    <div class="duo">
+      <div class="person">
+        <div class="avatar" data-init="j"></div>
+        <div class="name">— you</div>
+        <div class="role">half of jeezlabs</div>
+        <div class="links">
+          <a href="#">→ twitter</a>
+          <a href="#">→ github</a>
+        </div>
+      </div>
+      <div class="person">
+        <div class="avatar" data-init="z"></div>
+        <div class="name">— friend</div>
+        <div class="role">other half</div>
+        <div class="links">
+          <a href="#">→ twitter</a>
+          <a href="#">→ github</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="line">got an <em>idea?</em><br/>send it over.</div>
+  <a href="mailto:hey@jeezlabs.io" class="email">hey@jeezlabs.io</a>
+</section>
+
+<footer class="foot">
+  <div>© jeezlabs 2024— · all wrongs reserved</div>
+  <div>built w/ <span style="color: var(--hot);">♥</span> in the dark</div>
+</footer>
+
+<!-- ============ TWEAKS PANEL ============ -->
+<div id="tweaks-panel">
+  <h4><span>tweaks</span><span style="color: var(--dim);">jzl/cfg</span></h4>
+
+  <div class="tweak">
+    <label>theme</label>
+    <div class="row" data-tweak="theme">
+      <button class="opt" data-val="dark">dark</button>
+      <button class="opt" data-val="paper">paper</button>
+    </div>
+  </div>
+
+  <div class="tweak">
+    <label>hero arrangement</label>
+    <div class="row" data-tweak="arrangement">
+      <button class="opt" data-val="pile">pile</button>
+      <button class="opt" data-val="spiral">spiral</button>
+      <button class="opt" data-val="grid">grid</button>
+    </div>
+  </div>
+
+  <div class="tweak">
+    <label>accent</label>
+    <div class="row" data-tweak="accent">
+      <button class="opt" data-val="#d9ff4b">lime</button>
+      <button class="opt" data-val="#ff5a3c">red</button>
+      <button class="opt" data-val="#8ab4ff">blue</button>
+      <button class="opt" data-val="#e8e2d3">bone</button>
+    </div>
+  </div>
+
+  <div class="tweak">
+    <label>hero focus</label>
+    <div class="row" data-tweak="focus">
+      <button class="opt" data-val="full">full</button>
+      <button class="opt" data-val="minimal">minimal</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== TWEAK DEFAULTS =====
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "theme": "dark",
+    "arrangement": "pile",
+    "accent": "#d9ff4b",
+    "focus": "full"
+  }/*EDITMODE-END*/;
+
+  let state = { ...TWEAK_DEFAULTS };
+
+  // ===== WORKS DATA =====
+  const works = [
+    { t: "Cassette OS",        k: "macOS app",      y: "2025", s: "live",  art: "art-1"  },
+    { t: "Nightshade",         k: "web / game",     y: "2025", s: "live",  art: "art-2"  },
+    { t: "Little Radar",       k: "ios",            y: "2025", s: "ship",  art: "art-3"  },
+    { t: "Petal Protocol",     k: "experiment",     y: "2024", s: "live",  art: "art-4"  },
+    { t: "Subway Signs",       k: "generative",     y: "2024", s: "ship",  art: "art-5"  },
+    { t: "Heart Rate Opera",   k: "installation",   y: "2024", s: "ship",  art: "art-6"  },
+    { t: "Paper Calendar",     k: "print / web",    y: "2024", s: "ship",  art: "art-7"  },
+    { t: "Neon Weather",       k: "widget",         y: "2024", s: "draft", art: "art-8"  },
+    { t: "Scanlines",          k: "video tool",     y: "2023", s: "ship",  art: "art-9"  },
+    { t: "Mossy",              k: "zine",           y: "2023", s: "ship",  art: "art-10" },
+    { t: "Half Moon Keyboard", k: "hardware",       y: "2023", s: "draft", art: "art-11" },
+    { t: "Spin Cycle",         k: "web toy",        y: "2023", s: "ship",  art: "art-12" }
+  ];
+
+  // ===== BUILD HERO PILE =====
+  const stage = document.getElementById("pile-stage");
+
+  // deterministic "random" positions, shaped roughly like the reference
+  const pilePositions = [
+    { x: -180, y: -160, z: -200, r: -18 },
+    { x:  -40, y: -180, z:  -80, r:  -8 },
+    { x:  130, y: -140, z:   40, r:   6 },
+    { x: -220, y:  -40, z:  -60, r: -22 },
+    { x:  -60, y:  -30, z:  120, r:   2 },
+    { x:  160, y:  -20, z:    0, r:  12 },
+    { x: -200, y:   90, z:  -40, r:  28 },
+    { x:  -30, y:  110, z:   80, r:  -6 },
+    { x:  170, y:   90, z: -100, r:  18 },
+    { x: -100, y:  200, z:   20, r: -14 },
+    { x:   70, y:  210, z:  -60, r:  22 },
+    { x:  -10, y:   40, z:  200, r:  -2 },
+  ];
+
+  const spiralPositions = works.map((_, i) => {
+    const angle = (i / works.length) * Math.PI * 3;
+    const r = 50 + i * 22;
+    return {
+      x: Math.cos(angle) * r,
+      y: Math.sin(angle) * r,
+      z: (i % 4) * 30 - 60,
+      r: (angle * 180 / Math.PI) % 30 - 15
+    };
+  });
+
+  const gridPositions = works.map((_, i) => {
+    const col = i % 4;
+    const row = Math.floor(i / 4);
+    return {
+      x: col * 140 - 210,
+      y: row * 200 - 200,
+      z: 0,
+      r: 0
+    };
+  });
+
+  function arrangement() {
+    if (state.arrangement === "spiral") return spiralPositions;
+    if (state.arrangement === "grid") return gridPositions;
+    return pilePositions;
+  }
+
+  function buildPile() {
+    stage.innerHTML = "";
+    const positions = arrangement();
+    works.forEach((w, i) => {
+      const p = positions[i];
+      const card = document.createElement("div");
+      card.className = "card";
+      card.style.setProperty("--tx", p.x + "px");
+      card.style.setProperty("--ty", p.y + "px");
+      card.style.transform = `translate(${p.x}px, ${p.y}px) translateZ(${p.z}px) rotate(${p.r}deg)`;
+      card.style.zIndex = 100 + p.z;
+      card.innerHTML = `
+        <div class="inner ${w.art}">
+          <div class="tag">${w.k}</div>
+          <div class="meta">
+            <span>${String(i + 1).padStart(2, "0")}</span>
+            <span>${w.t}</span>
+            <span>${w.y}</span>
+          </div>
+        </div>
+      `;
+      stage.appendChild(card);
+    });
+  }
+  buildPile();
+
+  // ===== BUILD WORKS LIST =====
+  const list = document.getElementById("works-list");
+  works.forEach((w, i) => {
+    const row = document.createElement("a");
+    row.className = "work-row";
+    row.href = "#";
+    row.innerHTML = `
+      <div class="idx">${String(i + 1).padStart(3, "0")}</div>
+      <div class="title">${w.t.replace(/ /, " <em>")}</em></div>
+      <div class="kind">${w.k}</div>
+      <div class="year">${w.y}</div>
+      <div class="status ${w.s}"><span class="dot-mini"></span>${w.s === 'live' ? 'live' : w.s === 'ship' ? 'shipped' : 'draft'}</div>
+      <div class="arrow">→</div>
+      <div class="work-preview ${w.art}"></div>
+    `;
+    list.appendChild(row);
+  });
+
+  // ===== CLOCK =====
+  const clockEl = document.getElementById("clock");
+  const dateEl  = document.getElementById("now-date");
+  const todayEl = document.getElementById("today-date");
+  function tick() {
+    const d = new Date();
+    const hh = String(d.getHours()).padStart(2, "0");
+    const mm = String(d.getMinutes()).padStart(2, "0");
+    const ss = String(d.getSeconds()).padStart(2, "0");
+    clockEl.textContent = `${hh}:${mm}:${ss}`;
+    const dd = String(d.getDate()).padStart(2, "0");
+    const mo = String(d.getMonth() + 1).padStart(2, "0");
+    const yr = d.getFullYear();
+    dateEl.textContent = `${dd}.${mo}.${yr}`;
+    if (todayEl) todayEl.textContent = `${dd}/${mo}/${yr}`;
+  }
+  tick(); setInterval(tick, 1000);
+
+  // ===== APPLY STATE =====
+  function applyState() {
+    document.body.classList.toggle("paper", state.theme === "paper");
+    document.body.classList.toggle("arr-grid", state.arrangement === "grid");
+    document.body.classList.toggle("hero-minimal", state.focus === "minimal");
+    document.documentElement.style.setProperty("--warn", state.accent);
+    document.querySelectorAll("#tweaks-panel .row").forEach(row => {
+      const key = row.dataset.tweak;
+      row.querySelectorAll("button.opt").forEach(b => {
+        b.classList.toggle("active", b.dataset.val === state[key]);
+      });
+    });
+    buildPile();
+  }
+
+  // ===== WIRE TWEAKS =====
+  document.querySelectorAll("#tweaks-panel button.opt").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const row = btn.closest(".row");
+      const key = row.dataset.tweak;
+      state[key] = btn.dataset.val;
+      applyState();
+      try {
+        window.parent.postMessage({ type: "__edit_mode_set_keys", edits: { [key]: btn.dataset.val } }, "*");
+      } catch (e) {}
+    });
+  });
+
+  // ===== EDIT MODE PROTOCOL =====
+  window.addEventListener("message", (e) => {
+    if (!e.data) return;
+    if (e.data.type === "__activate_edit_mode") {
+      document.getElementById("tweaks-panel").classList.add("open");
+    }
+    if (e.data.type === "__deactivate_edit_mode") {
+      document.getElementById("tweaks-panel").classList.remove("open");
+    }
+  });
+  try { window.parent.postMessage({ type: "__edit_mode_available" }, "*"); } catch (e) {}
+
+  applyState();
+</script>
+
+</body>
+</html>

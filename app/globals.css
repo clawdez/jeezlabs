@@ -257,12 +257,15 @@ section.slab { position: relative; border-top: 1px solid var(--dimmer); padding:
 .work-row:hover .arrow { transform: translateX(0); color: var(--fg); }
 
 .work-preview {
-  position: absolute; right: 200px; top: 50%;
-  transform: translate(20px, -50%) scale(0.95);
-  width: 160px; height: 200px;
+  position: fixed; right: 48px; top: 50%;
+  transform: translate(20px, -50%) scale(0.96);
+  width: min(28vw, 360px); height: min(38vw, 460px);
   pointer-events: none; opacity: 0;
   transition: opacity 0.25s, transform 0.25s;
-  border: 1px solid rgba(255,255,255,0.15); z-index: 5;
+  border: 1px solid rgba(255,255,255,0.16); z-index: 80;
+  background-size: cover;
+  background-position: top center;
+  box-shadow: 0 36px 100px rgba(0,0,0,0.55);
 }
 .work-row:hover .work-preview { opacity: 1; transform: translate(0, -50%) scale(1); }
 
@@ -465,6 +468,10 @@ body.hero-minimal .pile { opacity: 0.12; filter: blur(1px); }
   border: 1px solid rgba(255,255,255,0.14);
   background: #0d0d0c;
   box-shadow: 0 40px 120px rgba(0,0,0,0.55);
+}
+.site-preview.app-preview {
+  width: min(100%, 360px);
+  aspect-ratio: 9 / 16;
 }
 .site-preview-bar {
   display: flex;

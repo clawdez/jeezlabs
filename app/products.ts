@@ -78,6 +78,7 @@ export const PRODUCTS: Product[] = [
     desc: "AI-powered place discovery and trip planning app for iOS.",
     builtBy: "jhinresh",
     repo: "https://github.com/JhiNResH/wanderly",
+    previewImage: "/previews/wanderly.png",
     preview: {
       lead: "Save places from Instagram, Threads, Xiaohongshu, or any app; Wanderly extracts place details, pins them to a personal map, and helps plan trips.",
       notes: [

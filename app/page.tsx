@@ -205,7 +205,11 @@ export default function Home() {
               <div className="year">{w.y}</div>
               <div className={`status ${w.s}`}><span className="dot-mini" />{STATUS_LABEL[w.s]}</div>
               <div className="arrow">→</div>
-              <div className={`work-preview ${w.art}`} />
+              <div
+                className={`work-preview ${w.art}`}
+                style={w.previewImage ? { backgroundImage: `url(${w.previewImage})` } : undefined}
+                aria-hidden="true"
+              />
             </Link>
           ))}
         </div>

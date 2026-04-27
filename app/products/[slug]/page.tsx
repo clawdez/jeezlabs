@@ -37,6 +37,8 @@ export default async function ProductPreview({ params }: ProductPreviewProps) {
 
   if (!product) notFound();
 
+  const isAppPreview = product.k.startsWith("ios ");
+
   return (
     <main className="preview-page">
       <header className="preview-chrome">
@@ -73,7 +75,7 @@ export default async function ProductPreview({ params }: ProductPreviewProps) {
 
         <div className="preview-visual-wrap">
           {product.previewImage ? (
-            <div className="site-preview">
+            <div className={`site-preview${isAppPreview ? " app-preview" : ""}`}>
               <div className="site-preview-bar">
                 <div className="site-preview-dots" aria-hidden="true">
                   <span />

@@ -98,6 +98,7 @@ export const PRODUCTS: Product[] = [
     desc: "Virtual try-on iOS app for trying clothes with your own photo.",
     builtBy: "jhinresh",
     repo: "https://github.com/JhiNResH/cloak",
+    previewImage: "/previews/cloak.png",
     preview: {
       lead: "Cloak is an iOS virtual try-on app for testing clothing looks with your own photo.",
       notes: ["Use a personal photo", "Preview clothing looks on iOS", "Built by jhinresh"],

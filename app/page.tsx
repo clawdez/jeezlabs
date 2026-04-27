@@ -13,27 +13,70 @@ interface TweakState {
   focus: Focus;
 }
 
-interface Work {
+interface Product {
   t: string;
   k: string;
   y: string;
-  s: "live" | "ship" | "draft";
+  s: "live" | "building" | "shipped" | "paused";
   art: string;
+  desc: string;
+  builtBy?: string;
+  href?: string;
+  repo?: string;
 }
 
-const WORKS: Work[] = [
-  { t: "Cassette OS",        k: "macOS app",      y: "2025", s: "live",  art: "art-1"  },
-  { t: "Nightshade",         k: "web / game",     y: "2025", s: "live",  art: "art-2"  },
-  { t: "Little Radar",       k: "ios",            y: "2025", s: "ship",  art: "art-3"  },
-  { t: "Petal Protocol",     k: "experiment",     y: "2024", s: "live",  art: "art-4"  },
-  { t: "Subway Signs",       k: "generative",     y: "2024", s: "ship",  art: "art-5"  },
-  { t: "Heart Rate Opera",   k: "installation",   y: "2024", s: "ship",  art: "art-6"  },
-  { t: "Paper Calendar",     k: "print / web",    y: "2024", s: "ship",  art: "art-7"  },
-  { t: "Neon Weather",       k: "widget",         y: "2024", s: "draft", art: "art-8"  },
-  { t: "Scanlines",          k: "video tool",     y: "2023", s: "ship",  art: "art-9"  },
-  { t: "Mossy",              k: "zine",           y: "2023", s: "ship",  art: "art-10" },
-  { t: "Half Moon Keyboard", k: "hardware",       y: "2023", s: "draft", art: "art-11" },
-  { t: "Spin Cycle",         k: "web toy",        y: "2023", s: "ship",  art: "art-12" },
+const PRODUCTS: Product[] = [
+  {
+    t: "Dojo",
+    k: "skill marketplace",
+    y: "2026",
+    s: "live",
+    art: "art-1",
+    desc: "AI skill marketplace with a newspaper-style product surface.",
+    href: "https://maiat-dojo.vercel.app",
+    repo: "https://github.com/JhiNResH/maiat-dojo",
+  },
+  {
+    t: "Jiagon",
+    k: "verified reviews",
+    y: "2026",
+    s: "live",
+    art: "art-2",
+    desc: "Receipt-gated review prototype backed by onchain payment proofs.",
+    builtBy: "jhinresh",
+    href: "https://jiagon.xyz",
+    repo: "https://github.com/JhiNResH/jiagon",
+  },
+  {
+    t: "Maiat Protocol",
+    k: "agent trust layer",
+    y: "2026",
+    s: "building",
+    art: "art-3",
+    desc: "Trust oracle for AI agents, tokens, attestations, and agentic commerce.",
+    href: "https://app.maiat.io",
+    repo: "https://github.com/JhiNResH/maiat-protocol",
+  },
+  {
+    t: "Wanderly",
+    k: "product sketch",
+    y: "2026",
+    s: "building",
+    art: "art-4",
+    desc: "A fresh product sketch from the lab, still being shaped in public.",
+    builtBy: "jhinresh",
+    repo: "https://github.com/JhiNResH/wanderly",
+  },
+  {
+    t: "Cloak",
+    k: "virtual try-on",
+    y: "2026",
+    s: "shipped",
+    art: "art-5",
+    desc: "Virtual try-on PWA for trying clothes with your own photo.",
+    builtBy: "jhinresh",
+    repo: "https://github.com/JhiNResH/cloak",
+  },
 ];
 
 type Pos = { x: number; y: number; z: number; r: number };
@@ -53,13 +96,13 @@ const PILE_POS: Pos[] = [
   { x:  -10, y:   40, z:  200, r:  -2 },
 ];
 
-const SPIRAL_POS: Pos[] = WORKS.map((_, i) => {
-  const angle = (i / WORKS.length) * Math.PI * 3;
+const SPIRAL_POS: Pos[] = PRODUCTS.map((_, i) => {
+  const angle = (i / PRODUCTS.length) * Math.PI * 3;
   const r = 50 + i * 22;
   return { x: Math.cos(angle) * r, y: Math.sin(angle) * r, z: (i % 4) * 30 - 60, r: (angle * 180 / Math.PI) % 30 - 15 };
 });
 
-const GRID_POS: Pos[] = WORKS.map((_, i) => ({
+const GRID_POS: Pos[] = PRODUCTS.map((_, i) => ({
   x: (i % 4) * 140 - 210,
   y: Math.floor(i / 4) * 200 - 200,
   z: 0,
@@ -68,7 +111,12 @@ const GRID_POS: Pos[] = WORKS.map((_, i) => ({
 
 const DEFAULTS: TweakState = { theme: "dark", arrangement: "pile", accent: "#d9ff4b", focus: "full" };
 
-const STATUS_LABEL: Record<Work["s"], string> = { live: "live", ship: "shipped", draft: "draft" };
+const STATUS_LABEL: Record<Product["s"], string> = {
+  live: "live",
+  building: "building",
+  shipped: "shipped",
+  paused: "paused",
+};
 
 export default function Home() {
   const [state, setState] = useState<TweakState>(DEFAULTS);
@@ -113,6 +161,9 @@ export default function Home() {
   }, []);
 
   const positions = state.arrangement === "spiral" ? SPIRAL_POS : state.arrangement === "grid" ? GRID_POS : PILE_POS;
+  const liveCount = PRODUCTS.filter(product => product.s === "live").length;
+  const buildingCount = PRODUCTS.filter(product => product.s === "building").length;
+  const latestProduct = PRODUCTS[0];
 
   return (
     <>
@@ -121,11 +172,11 @@ export default function Home() {
         <div className="left">
           <div className="mark">jeez<em>labs</em></div>
           <div style={{ color: "var(--dim)", alignSelf: "center" }}>
-            <span className="dot" />live · idx/001
+            <span className="dot" />product lab · idx/001
           </div>
         </div>
         <div className="right">
-          <a href="#works">works</a>
+          <a href="#works">products</a>
           <a href="#about">about</a>
           <a href="#contact">contact</a>
           <span style={{ color: "var(--dim)" }}>{dateStr}</span>
@@ -136,7 +187,7 @@ export default function Home() {
       <section className="hero">
         <div className="pile">
           <div className="pile-stage">
-            {WORKS.map((w, i) => {
+            {PRODUCTS.map((w, i) => {
               const p = positions[i];
               return (
                 <div
@@ -167,7 +218,7 @@ export default function Home() {
           <div className="tl-a">
             <div className="badge">currently shipping</div>
             <div style={{ marginTop: 6, fontFamily: "var(--font-serif), serif", fontSize: 20, fontStyle: "italic" }}>
-              3 live · 2 in-studio
+              {liveCount} live · {buildingCount} building
             </div>
           </div>
 
@@ -184,23 +235,23 @@ export default function Home() {
           </div>
 
           <div className="hero-title">
-            <div className="eyebrow">jeezlabs — a two-person studio</div>
+            <div className="eyebrow">jeezlabs — a two-person product lab</div>
             <h1>
-              small <em>things</em>,<br />
-              made <span className="amp">&amp;</span> shipped<br />
-              <em>mostly</em> on weekends.
+              small <em>products</em>,<br />
+              built <span className="amp">&amp;</span> shipped<br />
+              one at a time.
             </h1>
           </div>
 
           <div className="bl-a">
-            <div className="badge">works idx</div>
-            <div style={{ color: "var(--dim)", fontSize: 11, marginTop: 4 }}>↓ scroll · 12 entries</div>
+            <div className="badge">products idx</div>
+            <div style={{ color: "var(--dim)", fontSize: 11, marginTop: 4 }}>↓ scroll · {PRODUCTS.length} entries</div>
           </div>
 
           <div className="bl-b">
-            <div className="badge">manifest</div>
+            <div className="badge">last shipped</div>
             <div style={{ color: "var(--dim)", marginTop: 4, fontStyle: "italic", fontFamily: "var(--font-serif), serif", fontSize: 16 }}>
-              &ldquo;if it&apos;s dumb and it works, it isn&apos;t dumb&rdquo;
+              {latestProduct.t} / {latestProduct.k}
             </div>
           </div>
 
@@ -212,22 +263,32 @@ export default function Home() {
 
         <div className="ticker-side">
           <div className="stream">
-            JEEZLABS · INDEX/001 · WE MAKE THINGS · WE SHIP THINGS · WE BREAK THINGS · JEEZLABS · INDEX/001 · WE MAKE THINGS · WE SHIP THINGS · WE BREAK THINGS ·
+            JEEZLABS · PRODUCT INDEX · BUILD SMALL · SHIP OFTEN · KEEP GOING · JEEZLABS · PRODUCT INDEX · BUILD SMALL · SHIP OFTEN · KEEP GOING ·
           </div>
         </div>
       </section>
 
-      {/* works */}
+      {/* products */}
       <section className="slab" id="works">
         <div className="works-header">
-          <h2>the <em>works</em>.</h2>
-          <div className="count">012 entries · sorted by recency ↓</div>
+          <h2>the <em>products</em>.</h2>
+          <div className="count">{String(PRODUCTS.length).padStart(3, "0")} entries · newest first ↓</div>
         </div>
         <div className="works-list">
-          {WORKS.map((w, i) => (
-            <a key={w.t} className="work-row" href="#">
+          {PRODUCTS.map((w, i) => (
+            <a
+              key={w.t}
+              className="work-row"
+              href={w.href ?? w.repo ?? "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <div className="idx">{String(i + 1).padStart(3, "0")}</div>
-              <div className="title">{w.t.split(" ")[0]} <em>{w.t.split(" ").slice(1).join(" ")}</em></div>
+              <div className="product-main">
+                <div className="title">{w.t.split(" ")[0]} <em>{w.t.split(" ").slice(1).join(" ")}</em></div>
+                <div className="desc">{w.desc}</div>
+                {w.builtBy ? <div className="byline">built by {w.builtBy}</div> : null}
+              </div>
               <div className="kind">{w.k}</div>
               <div className="year">{w.y}</div>
               <div className={`status ${w.s}`}><span className="dot-mini" />{STATUS_LABEL[w.s]}</div>
@@ -241,29 +302,28 @@ export default function Home() {
       {/* about */}
       <section className="about" id="about">
         <div>
-          <h2>two <em>friends.</em><br />one <em>workshop.</em><br />many <em>small</em> things.</h2>
+          <h2>two <em>friends.</em><br />one <em>lab.</em><br />many <em>small</em> products.</h2>
         </div>
         <div className="copy">
-          <p>jeezlabs is a <em>two-person</em> studio that makes software, sketches, and occasional physical objects — mostly on weekends, mostly for the fun of it.</p>
-          <p>we&apos;re interested in <em>tools that feel like toys</em>, interfaces that behave like instruments, and the kind of small weird things that would never survive a product roadmap.</p>
-          <p>we ship when it&apos;s ready. sometimes that&apos;s a tuesday. sometimes it&apos;s <em>never.</em></p>
+          <p>jeezlabs is a <em>two-person</em> product lab for internet software, protocol experiments, and small tools we want to see exist.</p>
+          <p>we keep the page as a living index: when a product ships, grows, pauses, or turns into something else, it gets marked here.</p>
+          <p>some entries are live. some are still rough. all of them are part of the same habit: <em>build, ship, learn, repeat.</em></p>
           <div className="duo">
             <div className="person">
               <div className="avatar" data-init="j" />
-              <div className="name">— you</div>
-              <div className="role">half of jeezlabs</div>
+              <div className="name">— j</div>
+              <div className="role">builder / product</div>
               <div className="links">
-                <a href="#">→ twitter</a>
-                <a href="#">→ github</a>
+                <a href="https://github.com/JhiNResH" target="_blank" rel="noopener noreferrer">→ github</a>
+                <a href="mailto:hey@jeezlabs.io">→ email</a>
               </div>
             </div>
             <div className="person">
               <div className="avatar" data-init="z" />
               <div className="name">— friend</div>
-              <div className="role">other half</div>
+              <div className="role">builder / product</div>
               <div className="links">
-                <a href="#">→ twitter</a>
-                <a href="#">→ github</a>
+                <a href="mailto:hey@jeezlabs.io">→ contact</a>
               </div>
             </div>
           </div>
@@ -272,13 +332,13 @@ export default function Home() {
 
       {/* contact */}
       <section className="contact" id="contact">
-        <div className="line">got an <em>idea?</em><br />send it over.</div>
+        <div className="line">built something <em>new?</em><br />index it here.</div>
         <a href="mailto:hey@jeezlabs.io" className="email">hey@jeezlabs.io</a>
       </section>
 
       <footer className="foot">
-        <div>© jeezlabs 2024— · all wrongs reserved</div>
-        <div>built w/ <span style={{ color: "var(--hot)" }}>♥</span> in the dark</div>
+        <div>© jeezlabs 2024— · product index</div>
+        <div>built by two friends, shipped in public</div>
       </footer>
 
       {/* tweaks panel */}

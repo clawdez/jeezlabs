@@ -23,8 +23,8 @@ const news = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "jeezlabs — index",
-  description: "small things, made & shipped mostly on weekends.",
+  title: "jeezlabs — product index",
+  description: "A two-person product lab building and shipping small internet products.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

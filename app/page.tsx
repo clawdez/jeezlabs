@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
+import { PRODUCTS, STATUS_LABEL } from "./products";
 
 type Theme = "dark" | "paper";
 type Arrangement = "pile" | "spiral" | "grid";
@@ -12,72 +14,6 @@ interface TweakState {
   accent: string;
   focus: Focus;
 }
-
-interface Product {
-  t: string;
-  k: string;
-  y: string;
-  s: "live" | "building" | "shipped" | "paused";
-  art: string;
-  desc: string;
-  builtBy?: string;
-  href?: string;
-  repo?: string;
-}
-
-const PRODUCTS: Product[] = [
-  {
-    t: "Dojo",
-    k: "skill marketplace",
-    y: "2026",
-    s: "live",
-    art: "art-1",
-    desc: "AI skill marketplace with a newspaper-style product surface.",
-    href: "https://maiat-dojo.vercel.app",
-    repo: "https://github.com/JhiNResH/maiat-dojo",
-  },
-  {
-    t: "Jiagon",
-    k: "verified reviews",
-    y: "2026",
-    s: "live",
-    art: "art-2",
-    desc: "Receipt-gated review prototype backed by onchain payment proofs.",
-    builtBy: "jhinresh",
-    href: "https://jiagon.xyz",
-    repo: "https://github.com/JhiNResH/jiagon",
-  },
-  {
-    t: "Maiat Protocol",
-    k: "agent trust layer",
-    y: "2026",
-    s: "building",
-    art: "art-3",
-    desc: "Trust oracle for AI agents, tokens, attestations, and agentic commerce.",
-    href: "https://app.maiat.io",
-    repo: "https://github.com/JhiNResH/maiat-protocol",
-  },
-  {
-    t: "Wanderly",
-    k: "product sketch",
-    y: "2026",
-    s: "building",
-    art: "art-4",
-    desc: "A fresh product sketch from the lab, still being shaped in public.",
-    builtBy: "jhinresh",
-    repo: "https://github.com/JhiNResH/wanderly",
-  },
-  {
-    t: "Cloak",
-    k: "virtual try-on",
-    y: "2026",
-    s: "shipped",
-    art: "art-5",
-    desc: "Virtual try-on PWA for trying clothes with your own photo.",
-    builtBy: "jhinresh",
-    repo: "https://github.com/JhiNResH/cloak",
-  },
-];
 
 type Pos = { x: number; y: number; z: number; r: number };
 
@@ -111,32 +47,9 @@ const GRID_POS: Pos[] = PRODUCTS.map((_, i) => ({
 
 const DEFAULTS: TweakState = { theme: "dark", arrangement: "pile", accent: "#d9ff4b", focus: "full" };
 
-const STATUS_LABEL: Record<Product["s"], string> = {
-  live: "live",
-  building: "building",
-  shipped: "shipped",
-  paused: "paused",
-};
-
 export default function Home() {
   const [state, setState] = useState<TweakState>(DEFAULTS);
-  const [clock, setClock] = useState("00:00:00");
-  const [dateStr, setDateStr] = useState("");
-  const [todayStr, setTodayStr] = useState("");
   const [tweaksOpen, setTweaksOpen] = useState(false);
-
-  useEffect(() => {
-    const tick = () => {
-      const d = new Date();
-      const pad = (n: number) => String(n).padStart(2, "0");
-      setClock(`${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`);
-      setDateStr(`${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}`);
-      setTodayStr(`${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`);
-    };
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
 
   useEffect(() => {
     document.body.classList.toggle("paper", state.theme === "paper");
@@ -172,14 +85,14 @@ export default function Home() {
         <div className="left">
           <div className="mark">jeez<em>labs</em></div>
           <div style={{ color: "var(--dim)", alignSelf: "center" }}>
-            <span className="dot" />product lab · idx/001
+            <span className="dot" />product lab
           </div>
         </div>
         <div className="right">
           <a href="#works">products</a>
           <a href="#about">about</a>
           <a href="#contact">contact</a>
-          <span style={{ color: "var(--dim)" }}>{dateStr}</span>
+          <span style={{ color: "var(--dim)" }}>living archive</span>
         </div>
       </div>
 
@@ -223,9 +136,10 @@ export default function Home() {
           </div>
 
           <div className="tl-b">
-            <div className="badge">session</div>
-            <div className="clock" style={{ justifyContent: "center", marginTop: 4 }}>
-              <span className="big">{clock}</span>
+            <div className="badge">builders</div>
+            <div className="lab-stat" style={{ justifyContent: "center", marginTop: 4 }}>
+              <span className="big">02</span>
+              <span className="lbl">jhinresh · ezven</span>
             </div>
           </div>
 
@@ -256,8 +170,8 @@ export default function Home() {
           </div>
 
           <div className="bl-c">
-            <div className="badge">tomorrow 15.00 pm</div>
-            <div style={{ color: "var(--dim)", fontSize: 11, marginTop: 4 }}>{todayStr}</div>
+            <div className="badge">rhythm</div>
+            <div style={{ color: "var(--dim)", fontSize: 11, marginTop: 4 }}>always in progress</div>
           </div>
         </div>
 
@@ -276,12 +190,10 @@ export default function Home() {
         </div>
         <div className="works-list">
           {PRODUCTS.map((w, i) => (
-            <a
+            <Link
               key={w.t}
               className="work-row"
-              href={w.href ?? w.repo ?? "#"}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`/products/${w.slug}`}
             >
               <div className="idx">{String(i + 1).padStart(3, "0")}</div>
               <div className="product-main">
@@ -294,7 +206,7 @@ export default function Home() {
               <div className={`status ${w.s}`}><span className="dot-mini" />{STATUS_LABEL[w.s]}</div>
               <div className="arrow">→</div>
               <div className={`work-preview ${w.art}`} />
-            </a>
+            </Link>
           ))}
         </div>
       </section>
@@ -311,7 +223,7 @@ export default function Home() {
           <div className="duo">
             <div className="person">
               <div className="avatar" data-init="j" />
-              <div className="name">— j</div>
+              <div className="name">— jhinresh</div>
               <div className="role">builder / product</div>
               <div className="links">
                 <a href="https://github.com/JhiNResH" target="_blank" rel="noopener noreferrer">→ github</a>
@@ -319,8 +231,8 @@ export default function Home() {
               </div>
             </div>
             <div className="person">
-              <div className="avatar" data-init="z" />
-              <div className="name">— friend</div>
+              <div className="avatar" data-init="e" />
+              <div className="name">— ezven</div>
               <div className="role">builder / product</div>
               <div className="links">
                 <a href="mailto:hey@jeezlabs.io">→ contact</a>

@@ -71,14 +71,34 @@ export default async function ProductPreview({ params }: ProductPreviewProps) {
           </div>
         </div>
 
-        <div className="preview-art-wrap">
-          <div className={`preview-art ${product.art}`}>
-            <div className="tag">{product.k}</div>
-            <div className="meta">
-              <span>{product.y}</span>
-              <span>{STATUS_LABEL[product.s]}</span>
+        <div className="preview-visual-wrap">
+          {product.previewImage ? (
+            <div className="site-preview">
+              <div className="site-preview-bar">
+                <div className="site-preview-dots" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <span>{product.href ? new URL(product.href).hostname : product.t}</span>
+              </div>
+              <div className="site-preview-window">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={product.previewImage}
+                  alt={`${product.t} product preview`}
+                />
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className={`preview-art ${product.art}`}>
+              <div className="tag">{product.k}</div>
+              <div className="meta">
+                <span>{product.y}</span>
+                <span>{STATUS_LABEL[product.s]}</span>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

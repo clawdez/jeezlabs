@@ -11,6 +11,7 @@ export interface Product {
   builtBy?: string;
   href?: string;
   repo?: string;
+  previewImage?: string;
   preview: {
     lead: string;
     notes: string[];
@@ -28,6 +29,7 @@ export const PRODUCTS: Product[] = [
     desc: "AI skill marketplace with a newspaper-style product surface.",
     href: "https://maiat-dojo.vercel.app",
     repo: "https://github.com/JhiNResH/maiat-dojo",
+    previewImage: "/previews/dojo.png",
     preview: {
       lead: "A market surface for discovering, packaging, and shipping agent skills with an editorial feel.",
       notes: ["Newspaper-style interface", "Skill discovery and browsing", "Built for fast iteration"],
@@ -42,8 +44,9 @@ export const PRODUCTS: Product[] = [
     art: "art-2",
     desc: "Receipt-gated review prototype backed by onchain payment proofs.",
     builtBy: "jhinresh",
-    href: "https://jiagon.xyz",
+    href: "https://jiagon.vercel.app",
     repo: "https://github.com/JhiNResH/jiagon",
+    previewImage: "/previews/jiagon.png",
     preview: {
       lead: "A verified-review experiment where payment proof and product feedback sit in the same flow.",
       notes: ["Receipt-gated review model", "Onchain payment proof", "Built by jhinresh"],
@@ -59,6 +62,7 @@ export const PRODUCTS: Product[] = [
     desc: "Trust oracle for AI agents, tokens, attestations, and agentic commerce.",
     href: "https://app.maiat.io",
     repo: "https://github.com/JhiNResH/maiat-protocol",
+    previewImage: "/previews/maiat-protocol.png",
     preview: {
       lead: "A protocol layer for trust signals, attestations, and reputation across agentic commerce.",
       notes: ["Agent trust scoring", "Attestation-aware reputation", "Protocol-first direction"],
@@ -87,16 +91,16 @@ export const PRODUCTS: Product[] = [
   {
     slug: "cloak",
     t: "Cloak",
-    k: "virtual try-on pwa",
+    k: "ios virtual try-on",
     y: "2026",
     s: "shipped",
     art: "art-5",
-    desc: "Try on clothes from a photo in a lightweight web app.",
+    desc: "Virtual try-on iOS app for trying clothes with your own photo.",
     builtBy: "jhinresh",
     repo: "https://github.com/JhiNResH/cloak",
     preview: {
-      lead: "Cloak is a virtual try-on PWA for testing clothing looks with your own photo, built as a fast web experiment.",
-      notes: ["Use a personal photo", "Preview clothing looks in the browser", "Lightweight PWA experiment", "Built by jhinresh"],
+      lead: "Cloak is an iOS virtual try-on app for testing clothing looks with your own photo.",
+      notes: ["Use a personal photo", "Preview clothing looks on iOS", "Built by jhinresh"],
     },
   },
 ];

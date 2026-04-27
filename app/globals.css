@@ -62,8 +62,16 @@ body::before {
 .hero {
   position: relative; height: 100vh; min-height: 720px; overflow: hidden;
 }
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--bg) 0%, rgba(7,7,6,0.92) 34%, rgba(7,7,6,0.18) 72%, transparent 100%);
+}
 .hero-overlay {
-  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  position: absolute; inset: 0; z-index: 4; pointer-events: none;
   padding: 80px 48px 48px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -112,12 +120,13 @@ body::before {
 
 /* ---- pile ---- */
 .pile {
-  position: absolute; inset: 0; z-index: 2;
+  position: absolute; top: 0; right: 0; bottom: 0; left: 58%; z-index: 1;
   display: flex; align-items: center; justify-content: center;
   perspective: 1800px;
+  opacity: 0.72;
 }
 .pile-stage {
-  position: relative; width: 560px; height: 560px;
+  position: relative; width: 500px; height: 500px;
   transform-style: preserve-3d;
   animation: float 18s ease-in-out infinite;
 }
@@ -128,8 +137,8 @@ body::before {
 
 .card {
   position: absolute; left: 50%; top: 50%;
-  width: 180px; height: 240px;
-  margin-left: -90px; margin-top: -120px;
+  width: 164px; height: 220px;
+  margin-left: -82px; margin-top: -110px;
   background: #0a0a0a;
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02) inset;
@@ -346,6 +355,13 @@ body.paper {
   --bg: #e8e3d5; --fg: #1a1815; --dim: #8a8478; --dimmer: #c0b9a8;
 }
 body.paper .card { background: #fff; border-color: rgba(0,0,0,0.1); }
+body.paper .hero::after {
+  background: linear-gradient(90deg, var(--bg) 0%, rgba(232,227,213,0.94) 34%, rgba(232,227,213,0.22) 72%, transparent 100%);
+}
+body.paper .site-preview {
+  background: #f5f1e4;
+  border-color: rgba(0,0,0,0.14);
+}
 body.paper .tweaks-panel { background: #f5f1e4; }
 body.paper .person .avatar { background: repeating-linear-gradient(45deg, #d8d2c2 0 6px, #e5dfd0 6px 12px); }
 body.paper .work-row .desc { color: #5f594f; }
@@ -390,7 +406,7 @@ body.hero-minimal .pile { opacity: 0.12; filter: blur(1px); }
 }
 .preview-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
+  grid-template-columns: minmax(0, 0.9fr) minmax(420px, 48vw);
   align-items: end;
   gap: 64px;
   min-height: 68vh;
@@ -438,9 +454,51 @@ body.hero-minimal .pile { opacity: 0.12; filter: blur(1px); }
   border-color: var(--fg);
   color: var(--bg);
 }
-.preview-art-wrap {
+.preview-visual-wrap {
   display: flex;
   justify-content: flex-end;
+}
+.site-preview {
+  width: min(100%, 720px);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: #0d0d0c;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.55);
+}
+.site-preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 34px;
+  border-bottom: 1px solid var(--dimmer);
+  color: var(--dim);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  padding: 0 12px;
+  text-transform: uppercase;
+}
+.site-preview-dots {
+  display: flex;
+  gap: 6px;
+}
+.site-preview-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--dim);
+  opacity: 0.75;
+}
+.site-preview-window {
+  height: calc(100% - 34px);
+}
+.site-preview-window img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  background: #fff;
 }
 .preview-art {
   display: flex;
@@ -534,8 +592,17 @@ body.paper .preview-notes li {
   .chrome .right span {
     display: none;
   }
+  .ticker-side {
+    display: none;
+  }
   .hero {
     min-height: 680px;
+  }
+  .hero::after {
+    background: linear-gradient(180deg, var(--bg) 0%, rgba(7,7,6,0.88) 48%, rgba(7,7,6,0.2) 100%);
+  }
+  body.paper .hero::after {
+    background: linear-gradient(180deg, var(--bg) 0%, rgba(232,227,213,0.9) 48%, rgba(232,227,213,0.18) 100%);
   }
   .hero-overlay {
     grid-template-columns: 1fr 1fr;
@@ -550,10 +617,14 @@ body.paper .preview-notes li {
   .hero-title h1 {
     font-size: clamp(54px, 18vw, 82px);
   }
+  .pile {
+    inset: 0;
+    transform: translateX(18%);
+    opacity: 0.18;
+  }
   .pile-stage {
-    width: 420px;
-    height: 420px;
-    transform: scale(0.78);
+    width: 380px;
+    height: 380px;
   }
   section.slab,
   .about,
@@ -617,8 +688,11 @@ body.paper .preview-notes li {
   .preview-copy p {
     font-size: 19px;
   }
-  .preview-art-wrap {
+  .preview-visual-wrap {
     justify-content: flex-start;
+  }
+  .site-preview {
+    width: 100%;
   }
   .preview-art {
     width: min(100%, 300px);

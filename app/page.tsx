@@ -244,7 +244,7 @@ export default function Home() {
 
       {/* contact */}
       <section className="contact" id="contact">
-        <div className="line">built something <em>new?</em><br />index it here.</div>
+        <div className="line">small products,<br /><em>kept in public.</em></div>
         <a href="mailto:hey@jeezlabs.io" className="email">hey@jeezlabs.io</a>
       </section>
 

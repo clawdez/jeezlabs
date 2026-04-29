@@ -20,6 +20,27 @@ export interface Product {
 
 export const PRODUCTS: Product[] = [
   {
+    slug: "pingme",
+    t: "pingme",
+    k: "ping pong finder",
+    y: "2026",
+    s: "live",
+    art: "art-2",
+    desc: "See who's down to play ping pong right now. Signal your status, get pinged when people are ready.",
+    builtBy: "ezven",
+    href: "https://pingme.jeezlabs.io",
+    previewImage: "/previews/pingme.png",
+    preview: {
+      lead: "A real-time status board for pickup ping pong. Drag the ball to signal you're down, get push-notified when others are ready. Live at Texas Tech.",
+      notes: [
+        "Real-time presence — see who's down, playing, or away",
+        "Push notifications when the app is closed",
+        "PWA — installs to home screen on iOS and Android",
+        "Built by ezven",
+      ],
+    },
+  },
+  {
     slug: "dojo",
     t: "Dojo",
     k: "skill marketplace",

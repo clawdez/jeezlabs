@@ -29,7 +29,8 @@ export const PRODUCTS: Product[] = [
     art: "art-3",
     desc: "See who's down to play ping pong right now. Signal your status, get pinged when others are ready.",
     builtBy: "ezven",
-    href: "https://pingme.jeezlabs.io",
+    repo: "https://github.com/Ferxxo-pa/pingme",
+    previewImage: "/previews/pingme.png",
     preview: {
       lead: "A real-time status board for pickup ping pong. Drag the ball to signal you're down, get push-notified when others are ready. Live at Texas Tech.",
       notes: [
@@ -52,6 +53,7 @@ export const PRODUCTS: Product[] = [
     href: "https://distoken.art",
     repo: "https://github.com/Ferxxo-pa/DisToken",
     hackathon: "hackathon winner",
+    previewImage: "/previews/distoken.png",
     preview: {
       lead: "The best display for digital art is the screen you already own. Paste a wallet address and see your entire collection across 8 chains — no account needed.",
       notes: [
@@ -74,6 +76,7 @@ export const PRODUCTS: Product[] = [
     builtBy: "ezven",
     href: "https://transparent-five.vercel.app",
     repo: "https://github.com/Ferxxo-pa/transparent",
+    previewImage: "/previews/transparent.png",
     preview: {
       lead: "The party game with real stakes. Buy in with SOL, answer personal questions in the hot seat, and the most transparent player wins the pot.",
       notes: [
@@ -94,7 +97,7 @@ export const PRODUCTS: Product[] = [
     art: "art-5",
     desc: "Automated law review scanner. Upload a manuscript, get instant style violation flags with exact rule citations.",
     builtBy: "ezven",
-    repo: "https://github.com/Ferxxo-pa/Redline",
+    previewImage: "/previews/redlineai.png",
     preview: {
       lead: "Scan your law review paper for style violations instantly. Supports PDF, DOCX, and plain text. 61+ rules with AI-powered context-aware detection.",
       notes: [

@@ -12,6 +12,7 @@ export interface Product {
   href?: string;
   repo?: string;
   previewImage?: string;
+  hackathon?: string; // e.g. "hackathon winner"
   preview: {
     lead: string;
     notes: string[];
@@ -25,11 +26,10 @@ export const PRODUCTS: Product[] = [
     k: "ping pong finder",
     y: "2026",
     s: "live",
-    art: "art-2",
-    desc: "See who's down to play ping pong right now. Signal your status, get pinged when people are ready.",
+    art: "art-3",
+    desc: "See who's down to play ping pong right now. Signal your status, get pinged when others are ready.",
     builtBy: "ezven",
     href: "https://pingme.jeezlabs.io",
-    previewImage: "/previews/pingme.png",
     preview: {
       lead: "A real-time status board for pickup ping pong. Drag the ball to signal you're down, get push-notified when others are ready. Live at Texas Tech.",
       notes: [
@@ -41,13 +41,79 @@ export const PRODUCTS: Product[] = [
     },
   },
   {
+    slug: "distoken",
+    t: "DisToken",
+    k: "nft gallery viewer",
+    y: "2026",
+    s: "shipped",
+    art: "art-1",
+    desc: "Multi-chain NFT gallery viewer. Paste any wallet, see your entire collection across 8 blockchains instantly.",
+    builtBy: "ezven",
+    href: "https://distoken.art",
+    repo: "https://github.com/Ferxxo-pa/DisToken",
+    hackathon: "hackathon winner",
+    preview: {
+      lead: "The best display for digital art is the screen you already own. Paste a wallet address and see your entire collection across 8 chains — no account needed.",
+      notes: [
+        "8-chain support: Ethereum, Solana, Base, Polygon, Arbitrum, Optimism, Tezos, Ordinals",
+        "Phone remote control via QR code and room code",
+        "Kiosk mode for galleries and retail",
+        "Embed widget for any website",
+        "Built by ezven",
+      ],
+    },
+  },
+  {
+    slug: "transparent",
+    t: "Transparent",
+    k: "multiplayer party game",
+    y: "2026",
+    s: "shipped",
+    art: "art-4",
+    desc: "Real-money multiplayer party game on Solana. Players buy in with SOL, answer personal questions, and the most transparent player wins the pot.",
+    builtBy: "ezven",
+    href: "https://transparent-five.vercel.app",
+    repo: "https://github.com/Ferxxo-pa/transparent",
+    preview: {
+      lead: "The party game with real stakes. Buy in with SOL, answer personal questions in the hot seat, and the most transparent player wins the pot.",
+      notes: [
+        "Real SOL buy-ins and payouts on-chain",
+        "Email login with embedded wallets — no seed phrases",
+        "Prediction market for side bets",
+        "3 game modes: Classic, Hot-Take, Custom",
+        "Built by ezven",
+      ],
+    },
+  },
+  {
+    slug: "redlineai",
+    t: "Redline AI",
+    k: "law review scanner",
+    y: "2026",
+    s: "live",
+    art: "art-5",
+    desc: "Automated law review scanner. Upload a manuscript, get instant style violation flags with exact rule citations.",
+    builtBy: "ezven",
+    repo: "https://github.com/Ferxxo-pa/Redline",
+    preview: {
+      lead: "Scan your law review paper for style violations instantly. Supports PDF, DOCX, and plain text. 61+ rules with AI-powered context-aware detection.",
+      notes: [
+        "61+ style violation rules with exact citations",
+        "AI mode (Claude) for context-aware detection",
+        "PDF, DOCX, and plain text support",
+        "Built by ezven",
+      ],
+    },
+  },
+  {
     slug: "dojo",
     t: "Dojo",
     k: "skill marketplace",
     y: "2026",
     s: "live",
-    art: "art-1",
+    art: "art-2",
     desc: "AI skill marketplace with a newspaper-style product surface.",
+    hackathon: "hackathon winner",
     href: "https://maiat-dojo.vercel.app",
     repo: "https://github.com/JhiNResH/maiat-dojo",
     previewImage: "/previews/dojo.png",
@@ -62,7 +128,7 @@ export const PRODUCTS: Product[] = [
     k: "verified reviews",
     y: "2026",
     s: "live",
-    art: "art-2",
+    art: "art-1",
     desc: "Receipt-gated review prototype backed by onchain payment proofs.",
     builtBy: "jhinresh",
     href: "https://jiagon.vercel.app",
@@ -81,6 +147,7 @@ export const PRODUCTS: Product[] = [
     s: "building",
     art: "art-3",
     desc: "Trust oracle for AI agents, tokens, attestations, and agentic commerce.",
+    hackathon: "hackathon winner",
     href: "https://app.maiat.io",
     repo: "https://github.com/JhiNResH/maiat-protocol",
     previewImage: "/previews/maiat-protocol.png",

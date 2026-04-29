@@ -145,7 +145,7 @@ export default function Home() {
 
           <div className="tl-c">
             <div className="badge">jzl · 02</div>
-            <div style={{ marginTop: 6, color: "var(--dim)", fontSize: 11 }}>est. 2024 / tpe · sf</div>
+            <div style={{ marginTop: 6, color: "var(--dim)", fontSize: 11 }}>est. 2024 / tpe · sf · tx</div>
           </div>
 
           <div className="hero-title">
@@ -197,7 +197,10 @@ export default function Home() {
             >
               <div className="idx">{String(i + 1).padStart(3, "0")}</div>
               <div className="product-main">
-                <div className="title">{w.t.split(" ")[0]} <em>{w.t.split(" ").slice(1).join(" ")}</em></div>
+                <div className="title-row">
+                  <div className="title">{w.t.split(" ")[0]} <em>{w.t.split(" ").slice(1).join(" ")}</em></div>
+                  {w.hackathon ? <div className="hackathon-badge">🏆 {w.hackathon}</div> : null}
+                </div>
                 <div className="desc">{w.desc}</div>
                 {w.builtBy ? <div className="byline">built by {w.builtBy}</div> : null}
               </div>
@@ -239,7 +242,8 @@ export default function Home() {
               <div className="name">— ezven</div>
               <div className="role">builder / product</div>
               <div className="links">
-                <a href="mailto:hey@jeezlabs.io">→ contact</a>
+                <a href="https://x.com/ezveng" target="_blank" rel="noopener noreferrer">→ x / twitter</a>
+                <a href="https://github.com/Ferxxo-pa" target="_blank" rel="noopener noreferrer">→ github</a>
               </div>
             </div>
           </div>

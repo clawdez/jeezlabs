@@ -29,7 +29,7 @@ export const PRODUCTS: Product[] = [
     art: "art-3",
     desc: "See who's down to play ping pong right now. Signal your status, get pinged when others are ready.",
     builtBy: "ezven",
-    href: "https://pingme.jeezlabs.io",
+    href: "https://usepingme.com",
     preview: {
       lead: "A real-time status board for pickup ping pong. Drag the ball to signal you're down, get push-notified when others are ready. Live at Texas Tech.",
       notes: [
@@ -94,6 +94,7 @@ export const PRODUCTS: Product[] = [
     art: "art-5",
     desc: "Automated law review scanner. Upload a manuscript, get instant style violation flags with exact rule citations.",
     builtBy: "ezven",
+    href: "https://redlineai.xyz",
     repo: "https://github.com/Ferxxo-pa/Redline",
     preview: {
       lead: "Scan your law review paper for style violations instantly. Supports PDF, DOCX, and plain text. 61+ rules with AI-powered context-aware detection.",

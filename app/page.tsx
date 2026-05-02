@@ -202,7 +202,16 @@ export default function Home() {
                   {w.hackathon ? <div className="hackathon-badge">🏆 {w.hackathon}</div> : null}
                 </div>
                 <div className="desc">{w.desc}</div>
-                {w.builtBy ? <div className="byline">built by {w.builtBy}</div> : null}
+                <div className="builder-line">
+                  <span
+                    className={`jeez-mark${w.builtBy === "jhinresh" ? " je-active" : ""}${w.builtBy === "ezven" ? " ez-active" : ""}`}
+                    aria-label={w.builtBy ? `built by ${w.builtBy}` : "jeezlabs project"}
+                  >
+                    <span>JE</span>
+                    <span>EZ</span>
+                  </span>
+                  <span className="byline">{w.builtBy ? `built by ${w.builtBy}` : "jeezlabs"}</span>
+                </div>
               </div>
               <div className="kind">{w.k}</div>
               <div className="year">{w.y}</div>

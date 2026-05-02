@@ -232,9 +232,32 @@ section.slab { position: relative; border-top: 1px solid var(--dimmer); padding:
   line-height: 1.35;
   letter-spacing: 0;
 }
-.work-row .byline {
+.work-row .builder-line {
   margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 14px;
+}
+.work-row .jeez-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--dim);
+}
+.work-row .jeez-mark span {
+  opacity: 0.34;
+}
+.work-row .jeez-mark.je-active span:first-child,
+.work-row .jeez-mark.ez-active span:last-child {
   color: var(--warn);
+  opacity: 1;
+}
+.work-row .byline {
+  color: var(--dim);
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;

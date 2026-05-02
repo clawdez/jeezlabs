@@ -204,13 +204,13 @@ export default function Home() {
                 <div className="desc">{w.desc}</div>
                 <div className="builder-line">
                   <span
-                    className={`jeez-mark${w.builtBy === "jhinresh" ? " je-active" : ""}${w.builtBy === "ezven" ? " ez-active" : ""}`}
-                    aria-label={w.builtBy ? `built by ${w.builtBy}` : "jeezlabs project"}
+                    className={`jeez-mark${w.builtBy === "jhinresh" ? " je-active" : ""}${w.builtBy === "ezven" ? " ez-active" : ""}${!w.builtBy ? " jeez-active" : ""}`}
+                    aria-label={w.builtBy ? `built by ${w.builtBy}` : "built by jhinresh and ezven"}
                   >
                     <span>JE</span>
                     <span>EZ</span>
                   </span>
-                  <span className="byline">{w.builtBy ? `built by ${w.builtBy}` : "jeezlabs"}</span>
+                  <span className="byline">{w.builtBy ? `built by ${w.builtBy}` : "built by jhinresh · ezven"}</span>
                 </div>
               </div>
               <div className="kind">{w.k}</div>

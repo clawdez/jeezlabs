@@ -252,7 +252,8 @@ section.slab { position: relative; border-top: 1px solid var(--dimmer); padding:
   opacity: 0.34;
 }
 .work-row .jeez-mark.je-active span:first-child,
-.work-row .jeez-mark.ez-active span:last-child {
+.work-row .jeez-mark.ez-active span:last-child,
+.work-row .jeez-mark.jeez-active span {
   color: var(--warn);
   opacity: 1;
 }

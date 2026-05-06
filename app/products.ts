@@ -21,6 +21,28 @@ export interface Product {
 
 export const PRODUCTS: Product[] = [
   {
+    slug: "pincher",
+    t: "Pincher",
+    k: "carpool matcher agent",
+    y: "2026",
+    s: "live",
+    art: "art-2",
+    desc: "Telegram-first carpool matcher for crypto conference side events.",
+    builtBy: "jhinresh",
+    href: "https://pincher.vercel.app",
+    repo: "https://github.com/JhiNResH/Pincher",
+    previewImage: "/previews/pincher.png",
+    preview: {
+      lead: "A ride agent for conference side events: create Telegram ride rooms, match riders by destination and time, and coordinate manual splits after one person calls Uber.",
+      notes: [
+        "Telegram-first ride rooms and group topics",
+        "Destination and departure-time matching",
+        "Manual USDC, Venmo, Zelle, cash, or local settlement",
+        "Built by jhinresh",
+      ],
+    },
+  },
+  {
     slug: "pingme",
     t: "pingme",
     k: "ping pong finder",

@@ -258,7 +258,7 @@ export default function Home() {
               <div className="role">builder / product</div>
               <div className="links">
                 <a href="https://github.com/JhiNResH" target="_blank" rel="noopener noreferrer">→ github</a>
-                <a href="mailto:hey@jeezlabs.io">→ email</a>
+                <a href="https://x.com/JhiNResH" target="_blank" rel="noopener noreferrer">→ x / twitter</a>
               </div>
             </div>
             <div className="person">

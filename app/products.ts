@@ -140,6 +140,7 @@ export const PRODUCTS: Product[] = [
     art: "art-5",
     desc: "Automated law review scanner. Upload a manuscript, get instant style violation flags with exact rule citations.",
     builtBy: "ezven",
+    href: "http://redlineai.xyz/",
     previewImage: "/previews/redlineai.png",
     preview: {
       lead: "Scan your law review paper for style violations instantly. Supports PDF, DOCX, and plain text. 61+ rules with AI-powered context-aware detection.",

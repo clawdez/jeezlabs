@@ -118,54 +118,56 @@ body::before {
   font-style: italic; color: var(--warn);
 }
 
-/* ---- pile ---- */
-.pile {
-  position: absolute; top: 0; right: 0; bottom: 0; left: 58%; z-index: 1;
-  display: flex; align-items: center; justify-content: center;
-  perspective: 1800px;
-  opacity: 0.72;
+/* ---- hero QR ---- */
+.hero-qr {
+  position: absolute;
+  top: 50%;
+  right: clamp(56px, 7vw, 128px);
+  z-index: 1;
+  width: min(34vw, 460px);
+  transform: translateY(-50%) rotate(1deg);
 }
-.pile-stage {
-  position: relative; width: 500px; height: 500px;
-  transform-style: preserve-3d;
-  animation: float 18s ease-in-out infinite;
-}
-@keyframes float {
-  0%, 100% { transform: rotateX(4deg) rotateY(-2deg) translateY(0); }
-  50%       { transform: rotateX(-2deg) rotateY(3deg) translateY(-10px); }
-}
-
-.card {
-  position: absolute; left: 50%; top: 50%;
-  width: 164px; height: 220px;
-  margin-left: -82px; margin-top: -110px;
-  background: #0a0a0a;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02) inset;
+.hero-qr-card {
+  position: relative;
+  aspect-ratio: 1;
   overflow: hidden;
-  transition: transform 0.5s cubic-bezier(0.2,0.9,0.3,1.2), box-shadow 0.5s;
-  cursor: pointer; will-change: transform;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: #f8f7f2;
+  box-shadow: 0 44px 120px rgba(0,0,0,0.62), 0 0 0 1px rgba(255,255,255,0.03) inset;
 }
-.card .inner {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; justify-content: space-between;
-  padding: 10px 12px;
+.hero-qr-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 1;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 12px rgba(5,5,5,0.05);
 }
-.card .tag {
-  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: rgba(255,255,255,0.78); text-shadow: 0 1px 2px rgba(0,0,0,0.6);
-  align-self: flex-start; background: rgba(0,0,0,0.5);
-  padding: 2px 6px; backdrop-filter: blur(4px);
+.hero-qr-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-.card .meta {
-  display: flex; justify-content: space-between;
-  font-size: 9px; color: rgba(255,255,255,0.7);
-  font-variant-numeric: tabular-nums; text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+.hero-qr-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 14px;
+  color: var(--dim);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
-.card:hover {
-  transform: translate(var(--tx), var(--ty)) rotate(0deg) translateZ(120px) scale(1.12) !important;
-  z-index: 999 !important;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.15) inset;
+.hero-qr-meta strong {
+  color: var(--warn);
+  font-family: var(--font-serif), serif;
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-transform: none;
 }
 
 .art-1  { background: radial-gradient(circle at 30% 20%, #ff5a3c, transparent 40%), radial-gradient(circle at 70% 80%, #3b2a5e, transparent 50%), linear-gradient(135deg, #1a0f0a, #0a0a15); }
@@ -470,12 +472,8 @@ body.paper .tweaks-panel { background: #f5f1e4; }
 body.paper .person .avatar { background: repeating-linear-gradient(45deg, #d8d2c2 0 6px, #e5dfd0 6px 12px); }
 body.paper .work-row .desc { color: #5f594f; }
 
-/* ---- arrangement: grid ---- */
-body.arr-grid .pile-stage { animation: none; transform: none; }
-body.arr-grid .card { transition: transform 0.8s cubic-bezier(0.4,0,0.2,1) !important; }
-
 /* ---- hero: minimal ---- */
-body.hero-minimal .pile { opacity: 0.12; filter: blur(1px); }
+body.hero-minimal .hero-qr { opacity: 0.2; filter: blur(1px); }
 
 /* ---- product preview ---- */
 .preview-page {
@@ -725,14 +723,8 @@ body.paper .preview-notes li {
   .hero-title h1 {
     font-size: clamp(54px, 18vw, 82px);
   }
-  .pile {
-    inset: 0;
-    transform: translateX(18%);
-    opacity: 0.18;
-  }
-  .pile-stage {
-    width: 380px;
-    height: 380px;
+  .hero-qr {
+    display: none;
   }
   section.slab,
   .about,

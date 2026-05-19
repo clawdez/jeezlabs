@@ -231,6 +231,17 @@ export default function Home() {
       <section className="about" id="about">
         <div>
           <h2>two <em>friends.</em><br />one <em>lab.</em><br />many <em>small</em> products.</h2>
+          <a
+            className="social-embed"
+            href="https://x.com/virtuals_io/status/2032005346185920557?s=20"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Virtuals post about JeezLabs on X"
+          >
+            <span className="social-embed-kicker">x / virtuals_io</span>
+            <span className="social-embed-title">JeezLabs on Virtuals</span>
+            <span className="social-embed-url">x.com/virtuals_io/status/2032005346185920557</span>
+          </a>
         </div>
         <div className="copy">
           <p>jeezlabs is a <em>two-person</em> product lab for internet software, protocol experiments, and small tools we want to see exist.</p>

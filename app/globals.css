@@ -313,6 +313,45 @@ section.slab { position: relative; border-top: 1px solid var(--dimmer); padding:
   font-size: clamp(44px, 6vw, 96px); line-height: 0.92; letter-spacing: -0.03em;
 }
 .about h2 em { font-style: italic; color: var(--dim); }
+.social-embed {
+  display: block;
+  width: min(100%, 560px);
+  margin-top: 40px;
+  padding: 18px;
+  border: 1px solid var(--dimmer);
+  background: rgba(255,255,255,0.02);
+  text-decoration: none;
+  overflow: hidden;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+}
+.social-embed:hover {
+  border-color: rgba(217,255,75,0.42);
+  background: rgba(217,255,75,0.04);
+  transform: translateY(-2px);
+}
+.social-embed-kicker,
+.social-embed-url {
+  display: block;
+  color: var(--warn);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.social-embed-title {
+  display: block;
+  margin-top: 12px;
+  color: var(--fg);
+  font-family: var(--font-serif), serif;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.social-embed-url {
+  margin-top: 14px;
+  color: var(--dim);
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
 .about .copy {
   font-family: var(--font-news), serif;
   font-size: 20px; line-height: 1.5; color: #d9d4c8; max-width: 52ch;

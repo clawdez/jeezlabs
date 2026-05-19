@@ -21,6 +21,27 @@ export interface Product {
 
 export const PRODUCTS: Product[] = [
   {
+    slug: "gimi",
+    t: "Gimi",
+    k: "agentic rentals",
+    y: "2026",
+    s: "shipped",
+    art: "art-8",
+    desc: "Award-winning AI rental agent for school, community, and hackathon inventory.",
+    repo: "https://github.com/clawdez/Gimi",
+    hackathon: "hackathon winner",
+    previewImage: "/previews/gimi.png",
+    preview: {
+      lead: "Gimi is an agentic rental marketplace with Solana settlement built in: ask for a nearby item, fund escrow, hold a temporary rental token, return the item, and leave a receipt-backed outcome.",
+      notes: [
+        "AI-guided inventory search and rental checkout",
+        "Solana escrow, metered rent accrual, rental-token state, and receipt events",
+        "LI.FI funding quotes, ElevenLabs tools, Privy wallet onboarding, and MCP-style rental tools",
+        "Award-winning hackathon build by jeezlabs",
+      ],
+    },
+  },
+  {
     slug: "pincher",
     t: "Pincher",
     k: "carpool matcher agent",

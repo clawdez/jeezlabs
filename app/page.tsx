@@ -249,7 +249,11 @@ export default function Home() {
           <p>some entries are live. some are still rough. all of them are part of the same habit: <em>build, ship, learn, repeat.</em></p>
           <div className="duo">
             <div className="person">
-              <div className="avatar" data-init="j" />
+              <div
+                className="avatar avatar-photo"
+                style={{ backgroundImage: "url('/avatars/jhinresh.jpg')" }}
+                aria-label="jhinresh profile picture"
+              />
               <div className="name">— jhinresh</div>
               <div className="role">builder / product</div>
               <div className="links">
@@ -258,7 +262,11 @@ export default function Home() {
               </div>
             </div>
             <div className="person">
-              <div className="avatar" data-init="e" />
+              <div
+                className="avatar avatar-photo"
+                style={{ backgroundImage: "url('/avatars/ezven.jpg')" }}
+                aria-label="ezven profile picture"
+              />
               <div className="name">— ezven</div>
               <div className="role">builder / product</div>
               <div className="links">

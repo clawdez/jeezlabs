@@ -364,13 +364,21 @@ section.slab { position: relative; border-top: 1px solid var(--dimmer); padding:
 .person .avatar {
   aspect-ratio: 1;
   background: repeating-linear-gradient(45deg, #111 0 6px, #1a1a1a 6px 12px);
+  background-size: cover;
+  background-position: center;
   margin-bottom: 14px; position: relative; overflow: hidden;
+}
+.person .avatar-photo {
+  border: 1px solid rgba(255,255,255,0.08);
 }
 .person .avatar::after {
   content: attr(data-init); position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-serif), serif; font-style: italic;
   font-size: 72px; color: var(--fg); opacity: 0.85;
+}
+.person .avatar-photo::after {
+  content: none;
 }
 .person .name { font-family: var(--font-serif), serif; font-size: 22px; letter-spacing: -0.01em; }
 .person .role { font-size: 10px; color: var(--dim); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 2px; }

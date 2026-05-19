@@ -91,7 +91,7 @@ export default function Home() {
         <div className="right">
           <a href="#works">products</a>
           <a href="#about">about</a>
-          <a href="#contact">contact</a>
+          <a href="https://x.com/0xmaiat" target="_blank" rel="noopener noreferrer">x</a>
           <span style={{ color: "var(--dim)" }}>living archive</span>
         </div>
       </div>
@@ -278,15 +278,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* contact */}
-      <section className="contact" id="contact">
-        <div className="line">small products,<br /><em>kept in public.</em></div>
-        <a href="mailto:hey@jeezlabs.io" className="email">hey@jeezlabs.io</a>
-      </section>
-
       <footer className="foot">
         <div>© jeezlabs 2024— · product index</div>
-        <div>built by two friends, shipped in public</div>
+        <div className="foot-links">
+          <span>built by two friends, shipped in public</span>
+          <a href="https://x.com/0xmaiat" target="_blank" rel="noopener noreferrer">→ @0xmaiat</a>
+        </div>
       </footer>
 
       {/* tweaks panel */}

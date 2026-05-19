@@ -407,6 +407,19 @@ section.slab { position: relative; border-top: 1px solid var(--dimmer); padding:
   display: flex; justify-content: space-between;
   color: var(--dim); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
 }
+.foot-links {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.foot-links a {
+  color: var(--warn);
+}
+.foot-links a:hover {
+  color: var(--fg);
+}
 
 /* ---- tweaks panel ---- */
 .tweaks-panel {

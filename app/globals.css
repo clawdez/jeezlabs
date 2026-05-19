@@ -292,13 +292,21 @@ section.slab { position: relative; border-top: 1px solid var(--dimmer); padding:
 .work-preview {
   position: fixed; right: 48px; top: 50%;
   transform: translate(20px, -50%) scale(0.96);
-  width: min(28vw, 360px); height: min(38vw, 460px);
+  width: min(34vw, 480px); height: min(22vw, 320px);
   pointer-events: none; opacity: 0;
   transition: opacity 0.25s, transform 0.25s;
   border: 1px solid rgba(255,255,255,0.16); z-index: 80;
+  background-color: #0d0d0c;
+  background-repeat: no-repeat;
   background-size: cover;
   background-position: top center;
   box-shadow: 0 36px 100px rgba(0,0,0,0.55);
+}
+.work-preview.app-work-preview {
+  width: min(28vw, 360px);
+  height: min(38vw, 460px);
+  background-size: contain;
+  background-position: center;
 }
 .work-row:hover .work-preview { opacity: 1; transform: translate(0, -50%) scale(1); }
 

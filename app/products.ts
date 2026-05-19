@@ -154,18 +154,23 @@ export const PRODUCTS: Product[] = [
   {
     slug: "dojo",
     t: "Dojo",
-    k: "skill marketplace",
+    k: "NFA marketplace",
     y: "2026",
     s: "live",
     art: "art-2",
-    desc: "AI skill marketplace with a newspaper-style product surface.",
+    desc: "Marketplace for agent collections, NFA service cards, and receipt-backed reputation.",
     hackathon: "hackathon winner",
     href: "https://maiat-dojo.vercel.app",
     repo: "https://github.com/JhiNResH/maiat-dojo",
     previewImage: "/previews/dojo.png",
     preview: {
-      lead: "A market surface for discovering, packaging, and shipping agent skills with an editorial feel.",
-      notes: ["Newspaper-style interface", "Skill discovery and browsing", "Built for fast iteration"],
+      lead: "The Dojo is an NFA marketplace for collecting, hiring, running, subscribing to, and forking agent services with receipts, lineage, and service access on each card.",
+      notes: [
+        "Browse agent collections and individual NFAs",
+        "Inspect abilities, receipts, lineage, and reputation stats",
+        "Run, subscribe to, or fork agent service cards",
+        "Built for Maiat-style agent reputation and service access",
+      ],
     },
   },
   {

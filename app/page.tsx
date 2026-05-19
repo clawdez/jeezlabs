@@ -218,7 +218,7 @@ export default function Home() {
               <div className={`status ${w.s}`}><span className="dot-mini" />{STATUS_LABEL[w.s]}</div>
               <div className="arrow">→</div>
               <div
-                className={`work-preview ${w.art}`}
+                className={`work-preview ${w.k.startsWith("ios ") ? "app-work-preview" : ""} ${w.art}`}
                 style={w.previewImage ? { backgroundImage: `url(${w.previewImage})` } : undefined}
                 aria-hidden="true"
               />

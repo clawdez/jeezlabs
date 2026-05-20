@@ -1,20 +1,51 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import { PRODUCTS, STATUS_LABEL } from "./products";
 
 type Theme = "dark" | "paper";
+type Arrangement = "pile" | "spiral" | "grid";
 type Focus = "full" | "minimal";
 
 interface TweakState {
   theme: Theme;
+  arrangement: Arrangement;
   accent: string;
   focus: Focus;
 }
 
-const DEFAULTS: TweakState = { theme: "dark", accent: "#d9ff4b", focus: "full" };
+type Pos = { x: number; y: number; z: number; r: number };
+
+const PILE_POS: Pos[] = [
+  { x: -180, y: -160, z: -200, r: -18 },
+  { x:  -40, y: -180, z:  -80, r:  -8 },
+  { x:  130, y: -140, z:   40, r:   6 },
+  { x: -220, y:  -40, z:  -60, r: -22 },
+  { x:  -60, y:  -30, z:  120, r:   2 },
+  { x:  160, y:  -20, z:    0, r:  12 },
+  { x: -200, y:   90, z:  -40, r:  28 },
+  { x:  -30, y:  110, z:   80, r:  -6 },
+  { x:  170, y:   90, z: -100, r:  18 },
+  { x: -100, y:  200, z:   20, r: -14 },
+  { x:   70, y:  210, z:  -60, r:  22 },
+  { x:  -10, y:   40, z:  200, r:  -2 },
+];
+
+const SPIRAL_POS: Pos[] = PRODUCTS.map((_, i) => {
+  const angle = (i / PRODUCTS.length) * Math.PI * 3;
+  const r = 50 + i * 22;
+  return { x: Math.cos(angle) * r, y: Math.sin(angle) * r, z: (i % 4) * 30 - 60, r: (angle * 180 / Math.PI) % 30 - 15 };
+});
+
+const GRID_POS: Pos[] = PRODUCTS.map((_, i) => ({
+  x: (i % 4) * 140 - 210,
+  y: Math.floor(i / 4) * 200 - 200,
+  z: 0,
+  r: 0,
+}));
+
+const DEFAULTS: TweakState = { theme: "dark", arrangement: "pile", accent: "#d9ff4b", focus: "full" };
 
 export default function Home() {
   const [state, setState] = useState<TweakState>(DEFAULTS);
@@ -22,6 +53,7 @@ export default function Home() {
 
   useEffect(() => {
     document.body.classList.toggle("paper", state.theme === "paper");
+    document.body.classList.toggle("arr-grid", state.arrangement === "grid");
     document.body.classList.toggle("hero-minimal", state.focus === "minimal");
     document.documentElement.style.setProperty("--warn", state.accent);
   }, [state]);
@@ -41,6 +73,7 @@ export default function Home() {
     try { window.parent.postMessage({ type: "__edit_mode_set_keys", edits: { [key]: val } }, "*"); } catch {}
   }, []);
 
+  const positions = state.arrangement === "spiral" ? SPIRAL_POS : state.arrangement === "grid" ? GRID_POS : PILE_POS;
   const liveCount = PRODUCTS.filter(product => product.s === "live").length;
   const buildingCount = PRODUCTS.filter(product => product.s === "building").length;
   const latestProduct = PRODUCTS[0];
@@ -65,19 +98,32 @@ export default function Home() {
 
       {/* hero */}
       <section className="hero">
-        <div className="hero-qr">
-          <div className="hero-qr-card">
-            <Image
-              src="/hero/poap-qr.jpg"
-              alt="POAP QR code"
-              width={1080}
-              height={1080}
-              priority
-            />
-          </div>
-          <div className="hero-qr-meta">
-            <span>scan</span>
-            <strong>poap</strong>
+        <div className="pile">
+          <div className="pile-stage">
+            {PRODUCTS.map((w, i) => {
+              const p = positions[i];
+              return (
+                <div
+                  key={w.t}
+                  className="card"
+                  style={{
+                    "--tx": `${p.x}px`,
+                    "--ty": `${p.y}px`,
+                    transform: `translate(${p.x}px, ${p.y}px) translateZ(${p.z}px) rotate(${p.r}deg)`,
+                    zIndex: 100 + p.z,
+                  } as React.CSSProperties}
+                >
+                  <div className={`inner ${w.art}`}>
+                    <div className="tag">{w.k}</div>
+                    <div className="meta">
+                      <span>{String(i + 1).padStart(2, "0")}</span>
+                      <span>{w.t}</span>
+                      <span>{w.y}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -249,6 +295,15 @@ export default function Home() {
           <div className="row">
             {(["dark", "paper"] as Theme[]).map(v => (
               <button key={v} className={`opt${state.theme === v ? " active" : ""}`} onClick={() => set("theme", v)}>{v}</button>
+            ))}
+          </div>
+        </div>
+
+        <div className="tweak">
+          <label>hero arrangement</label>
+          <div className="row">
+            {(["pile", "spiral", "grid"] as Arrangement[]).map(v => (
+              <button key={v} className={`opt${state.arrangement === v ? " active" : ""}`} onClick={() => set("arrangement", v)}>{v}</button>
             ))}
           </div>
         </div>

@@ -1,331 +1,314 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
 import { PRODUCTS, STATUS_LABEL } from "./products";
 
-type Theme = "dark" | "paper";
-type Arrangement = "pile" | "spiral" | "grid";
-type Focus = "full" | "minimal";
-
-interface TweakState {
-  theme: Theme;
-  arrangement: Arrangement;
-  accent: string;
-  focus: Focus;
+function builderLabel(builtBy?: string) {
+  if (builtBy === "jhinresh") return "built by jhinresh";
+  if (builtBy === "ezven") return "built by ezven";
+  return "built by jhinresh + ezven";
 }
 
-type Pos = { x: number; y: number; z: number; r: number };
-
-const PILE_POS: Pos[] = [
-  { x: -180, y: -160, z: -200, r: -18 },
-  { x:  -40, y: -180, z:  -80, r:  -8 },
-  { x:  130, y: -140, z:   40, r:   6 },
-  { x: -220, y:  -40, z:  -60, r: -22 },
-  { x:  -60, y:  -30, z:  120, r:   2 },
-  { x:  160, y:  -20, z:    0, r:  12 },
-  { x: -200, y:   90, z:  -40, r:  28 },
-  { x:  -30, y:  110, z:   80, r:  -6 },
-  { x:  170, y:   90, z: -100, r:  18 },
-  { x: -100, y:  200, z:   20, r: -14 },
-  { x:   70, y:  210, z:  -60, r:  22 },
-  { x:  -10, y:   40, z:  200, r:  -2 },
-];
-
-const SPIRAL_POS: Pos[] = PRODUCTS.map((_, i) => {
-  const angle = (i / PRODUCTS.length) * Math.PI * 3;
-  const r = 50 + i * 22;
-  return { x: Math.cos(angle) * r, y: Math.sin(angle) * r, z: (i % 4) * 30 - 60, r: (angle * 180 / Math.PI) % 30 - 15 };
-});
-
-const GRID_POS: Pos[] = PRODUCTS.map((_, i) => ({
-  x: (i % 4) * 140 - 210,
-  y: Math.floor(i / 4) * 200 - 200,
-  z: 0,
-  r: 0,
-}));
-
-const DEFAULTS: TweakState = { theme: "dark", arrangement: "pile", accent: "#d9ff4b", focus: "full" };
+function builderClass(builtBy?: string) {
+  if (builtBy === "jhinresh") return "je-active";
+  if (builtBy === "ezven") return "ez-active";
+  return "jeez-active";
+}
 
 export default function Home() {
-  const [state, setState] = useState<TweakState>(DEFAULTS);
-  const [tweaksOpen, setTweaksOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.classList.toggle("paper", state.theme === "paper");
-    document.body.classList.toggle("arr-grid", state.arrangement === "grid");
-    document.body.classList.toggle("hero-minimal", state.focus === "minimal");
-    document.documentElement.style.setProperty("--warn", state.accent);
-  }, [state]);
-
-  useEffect(() => {
-    const handler = (e: MessageEvent) => {
-      if (e.data?.type === "__activate_edit_mode") setTweaksOpen(true);
-      if (e.data?.type === "__deactivate_edit_mode") setTweaksOpen(false);
-    };
-    window.addEventListener("message", handler);
-    try { window.parent.postMessage({ type: "__edit_mode_available" }, "*"); } catch {}
-    return () => window.removeEventListener("message", handler);
-  }, []);
-
-  const set = useCallback(<K extends keyof TweakState>(key: K, val: TweakState[K]) => {
-    setState(prev => ({ ...prev, [key]: val }));
-    try { window.parent.postMessage({ type: "__edit_mode_set_keys", edits: { [key]: val } }, "*"); } catch {}
-  }, []);
-
-  const positions = state.arrangement === "spiral" ? SPIRAL_POS : state.arrangement === "grid" ? GRID_POS : PILE_POS;
-  const liveCount = PRODUCTS.filter(product => product.s === "live").length;
-  const buildingCount = PRODUCTS.filter(product => product.s === "building").length;
-  const latestProduct = PRODUCTS[0];
+  const liveCount = PRODUCTS.filter((product) => product.s === "live").length;
+  const shippedCount = PRODUCTS.filter((product) => product.s === "shipped").length;
+  const buildingCount = PRODUCTS.filter((product) => product.s === "building").length;
+  const iOSCount = PRODUCTS.filter((product) => product.k.startsWith("ios ")).length;
+  const protocolCount = PRODUCTS.filter((product) => product.k.includes("agent") || product.k.includes("trust")).length;
+  const winnerCount = PRODUCTS.filter((product) => product.hackathon).length;
 
   return (
-    <>
-      {/* chrome */}
-      <div className="chrome">
-        <div className="left">
-          <div className="mark">jeez<em>labs</em></div>
-          <div style={{ color: "var(--dim)", alignSelf: "center" }}>
-            <span className="dot" />product lab
-          </div>
-        </div>
-        <div className="right">
+    <main>
+      <header className="chrome">
+        <Link className="mark" href="/" aria-label="JeezLabs home">
+          jeez<em>labs</em>
+        </Link>
+        <nav className="nav" aria-label="Primary navigation">
           <a href="#works">products</a>
           <a href="#about">about</a>
-          <a href="https://x.com/0xmaiat" target="_blank" rel="noopener noreferrer">x</a>
-          <span style={{ color: "var(--dim)" }}>living archive</span>
-        </div>
-      </div>
+          <a href="https://x.com/0xmaiat" target="_blank" rel="noopener noreferrer">
+            @0xmaiat
+          </a>
+        </nav>
+      </header>
 
-      {/* hero */}
-      <section className="hero">
-        <div className="pile">
-          <div className="pile-stage">
-            {PRODUCTS.map((w, i) => {
-              const p = positions[i];
-              return (
-                <div
-                  key={w.t}
-                  className="card"
-                  style={{
-                    "--tx": `${p.x}px`,
-                    "--ty": `${p.y}px`,
-                    transform: `translate(${p.x}px, ${p.y}px) translateZ(${p.z}px) rotate(${p.r}deg)`,
-                    zIndex: 100 + p.z,
-                  } as React.CSSProperties}
-                >
-                  <div className={`inner ${w.art}`}>
-                    <div className="tag">{w.k}</div>
-                    <div className="meta">
-                      <span>{String(i + 1).padStart(2, "0")}</span>
-                      <span>{w.t}</span>
-                      <span>{w.y}</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <p className="kicker">two builders / public product index / 2026</p>
+          <h1 id="hero-title">
+            small products,
+            <br />
+            kept <em>in public.</em>
+          </h1>
+          <p className="hero-lede">
+            JeezLabs is where Jhinresh and Ezven keep the things we actually
+            ship: agent marketplaces, iOS apps, rental tools, verified reviews,
+            protocol layers, and small internet software.
+          </p>
+          <div className="hero-actions">
+            <a className="button primary" href="#works">
+              view products
+            </a>
+            <a
+              className="button secondary"
+              href="https://x.com/virtuals_io/status/2032005346185920557?s=20"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              virtuals post
+            </a>
           </div>
         </div>
 
-        <div className="hero-overlay">
-          <div className="tl-a">
-            <div className="badge">currently shipping</div>
-            <div style={{ marginTop: 6, fontFamily: "var(--font-serif), serif", fontSize: 20, fontStyle: "italic" }}>
-              {liveCount} live · {buildingCount} building
+        <aside className="hero-panel lab-panel" aria-label="Current JeezLabs snapshot">
+          <div className="panel-top">
+            <span>lab board</span>
+            <span>jzl / 02</span>
+          </div>
+
+          <div className="lab-board">
+            <div className="lab-board-mark" aria-label="JEEZ">
+              <span>JE</span>
+              <span>EZ</span>
+            </div>
+            <p>
+              two friends building small internet products, protocol
+              experiments, and useful apps in public.
+            </p>
+          </div>
+
+          <dl className="stats-grid">
+            <div>
+              <dt>live</dt>
+              <dd>{String(liveCount).padStart(2, "0")}</dd>
+            </div>
+            <div>
+              <dt>shipped</dt>
+              <dd>{String(shippedCount).padStart(2, "0")}</dd>
+            </div>
+            <div>
+              <dt>building</dt>
+              <dd>{String(buildingCount).padStart(2, "0")}</dd>
+            </div>
+          </dl>
+
+          <div className="lab-mix" aria-label="JeezLabs product mix">
+            <div>
+              <span>ios apps</span>
+              <strong>{String(iOSCount).padStart(2, "0")}</strong>
+            </div>
+            <div>
+              <span>agent / protocol</span>
+              <strong>{String(protocolCount).padStart(2, "0")}</strong>
+            </div>
+            <div>
+              <span>winners</span>
+              <strong>{String(winnerCount).padStart(2, "0")}</strong>
             </div>
           </div>
 
-          <div className="tl-b">
-            <div className="badge">builders</div>
-            <div className="lab-stat" style={{ justifyContent: "center", marginTop: 4 }}>
-              <span className="big">02</span>
-              <span className="lbl">jhinresh · ezven</span>
+          <div className="lab-builders" aria-label="JeezLabs builders">
+            <div>
+              <Image
+                src="/avatars/jhinresh.jpg"
+                alt="Jhinresh profile picture"
+                width={48}
+                height={48}
+                priority
+              />
+              <span>jhinresh</span>
+            </div>
+            <div>
+              <Image
+                src="/avatars/ezven.jpg"
+                alt="Ezven profile picture"
+                width={48}
+                height={48}
+                priority
+              />
+              <span>ezven</span>
             </div>
           </div>
+        </aside>
+      </section>
 
-          <div className="tl-c">
-            <div className="badge">jzl · 02</div>
-            <div style={{ marginTop: 6, color: "var(--dim)", fontSize: 11 }}>est. 2024 / tpe · sf · tx</div>
-          </div>
-
-          <div className="hero-title">
-            <div className="eyebrow">jeezlabs — a two-person product lab</div>
-            <h1>
-              small <em>products</em>,<br />
-              built <span className="amp">&amp;</span> shipped<br />
-              one at a time.
-            </h1>
-          </div>
-
-          <div className="bl-a">
-            <div className="badge">products idx</div>
-            <div style={{ color: "var(--dim)", fontSize: 11, marginTop: 4 }}>↓ scroll · {PRODUCTS.length} entries</div>
-          </div>
-
-          <div className="bl-b">
-            <div className="badge">last shipped</div>
-            <div style={{ color: "var(--dim)", marginTop: 4, fontStyle: "italic", fontFamily: "var(--font-serif), serif", fontSize: 16 }}>
-              {latestProduct.t} / {latestProduct.k}
-            </div>
-          </div>
-
-          <div className="bl-c">
-            <div className="badge">rhythm</div>
-            <div style={{ color: "var(--dim)", fontSize: 11, marginTop: 4 }}>always in progress</div>
-          </div>
+      <section className="section index-note" aria-label="How the index works">
+        <div>
+          <p className="kicker">how to read it</p>
+          <h2>Not a landing page. A living index.</h2>
         </div>
-
-        <div className="ticker-side">
-          <div className="stream">
-            JEEZLABS · PRODUCT INDEX · BUILD SMALL · SHIP OFTEN · KEEP GOING · JEEZLABS · PRODUCT INDEX · BUILD SMALL · SHIP OFTEN · KEEP GOING ·
-          </div>
+        <div className="note-copy">
+          <p>
+            New products go at the top. Rough products stay visible. If a
+            product grows, pauses, wins, or turns into something else, it gets
+            marked here instead of hidden.
+          </p>
+          <p>
+            The JEEZ mark shows ownership: JE lights up for Jhinresh, EZ lights
+            up for Ezven, and all four letters light up when it is shared.
+          </p>
         </div>
       </section>
 
-      {/* products */}
-      <section className="slab" id="works">
-        <div className="works-header">
-          <h2>the <em>products</em>.</h2>
-          <div className="count">{String(PRODUCTS.length).padStart(3, "0")} entries · newest first ↓</div>
+      <section className="section products-section" id="works">
+        <div className="section-head">
+          <div>
+            <p className="kicker">products</p>
+            <h2>the current stack.</h2>
+          </div>
+          <p>{String(PRODUCTS.length).padStart(2, "0")} entries, newest first.</p>
         </div>
-        <div className="works-list">
-          {PRODUCTS.map((w, i) => (
-            <Link
-              key={w.t}
-              className="work-row"
-              href={`/products/${w.slug}`}
-            >
-              <div className="idx">{String(i + 1).padStart(3, "0")}</div>
-              <div className="product-main">
-                <div className="title-row">
-                  <div className="title">{w.t.split(" ")[0]} <em>{w.t.split(" ").slice(1).join(" ")}</em></div>
-                  {w.hackathon ? <div className="hackathon-badge">🏆 {w.hackathon}</div> : null}
+
+        <div className="product-grid">
+          {PRODUCTS.map((product, index) => (
+            <article className="product-card" key={product.slug}>
+              <Link className="product-preview" href={`/products/${product.slug}`}>
+                {product.previewImage ? (
+                  <Image
+                    src={product.previewImage}
+                    alt={`${product.t} product preview`}
+                    fill
+                    loading="eager"
+                    sizes="(max-width: 760px) 92vw, (max-width: 1180px) 44vw, 360px"
+                  />
+                ) : (
+                  <div className={`preview-fallback ${product.art}`} />
+                )}
+              </Link>
+
+              <div className="product-content">
+                <div className="product-meta">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <span className={`status ${product.s}`}>{STATUS_LABEL[product.s]}</span>
                 </div>
-                <div className="desc">{w.desc}</div>
-                <div className="builder-line">
+                <div className="product-title-row">
+                  <h3>{product.t}</h3>
+                  {product.hackathon ? <span className="award small">{product.hackathon}</span> : null}
+                </div>
+                <p className="product-kind">{product.k}</p>
+                <p className="product-desc">{product.desc}</p>
+
+                <div className="product-foot">
                   <span
-                    className={`jeez-mark${w.builtBy === "jhinresh" ? " je-active" : ""}${w.builtBy === "ezven" ? " ez-active" : ""}${!w.builtBy ? " jeez-active" : ""}`}
-                    aria-label={w.builtBy ? `built by ${w.builtBy}` : "built by jhinresh and ezven"}
+                    className={`jeez-mark ${builderClass(product.builtBy)}`}
+                    aria-label={builderLabel(product.builtBy)}
                   >
                     <span>JE</span>
                     <span>EZ</span>
                   </span>
-                  <span className="byline">{w.builtBy ? `built by ${w.builtBy}` : "built by jhinresh · ezven"}</span>
+                  <div className="product-links">
+                    <Link href={`/products/${product.slug}`}>preview</Link>
+                    {product.href ? (
+                      <a href={product.href} target="_blank" rel="noopener noreferrer">
+                        live
+                      </a>
+                    ) : null}
+                    {product.repo ? (
+                      <a href={product.repo} target="_blank" rel="noopener noreferrer">
+                        gh
+                      </a>
+                    ) : null}
+                  </div>
                 </div>
               </div>
-              <div className="kind">{w.k}</div>
-              <div className="year">{w.y}</div>
-              <div className={`status ${w.s}`}><span className="dot-mini" />{STATUS_LABEL[w.s]}</div>
-              <div className="arrow">→</div>
-              <div
-                className={`work-preview ${w.k.startsWith("ios ") ? "app-work-preview" : ""} ${w.art}`}
-                style={w.previewImage ? { backgroundImage: `url(${w.previewImage})` } : undefined}
-                aria-hidden="true"
-              />
-            </Link>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* about */}
-      <section className="about" id="about">
+      <section className="section about" id="about">
         <div>
-          <h2>two <em>friends.</em><br />one <em>lab.</em><br />many <em>small</em> products.</h2>
+          <p className="kicker">builders</p>
+          <h2>
+            two <em>friends.</em>
+            <br />
+            one <em>lab.</em>
+          </h2>
           <a
             className="social-embed"
             href="https://x.com/virtuals_io/status/2032005346185920557?s=20"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Open Virtuals post about JeezLabs on X"
           >
-            <span className="social-embed-kicker">x / virtuals_io</span>
-            <span className="social-embed-title">JeezLabs on Virtuals</span>
-            <span className="social-embed-url">x.com/virtuals_io/status/2032005346185920557</span>
+            <span>x / virtuals_io</span>
+            <strong>JeezLabs on Virtuals</strong>
+            <small>x.com/virtuals_io/status/2032005346185920557</small>
           </a>
         </div>
-        <div className="copy">
-          <p>jeezlabs is a <em>two-person</em> product lab for internet software, protocol experiments, and small tools we want to see exist.</p>
-          <p>we keep the page as a living index: when a product ships, grows, pauses, or turns into something else, it gets marked here.</p>
-          <p>some entries are live. some are still rough. all of them are part of the same habit: <em>build, ship, learn, repeat.</em></p>
+
+        <div className="about-copy">
+          <p>
+            jeezlabs is a <em>two-person</em> product lab for internet
+            software, protocol experiments, and small tools we want to see
+            exist.
+          </p>
+          <p>
+            some entries are live. some are still rough. all of them are part
+            of the same habit: <em>build, ship, learn, repeat.</em>
+          </p>
+
           <div className="duo">
-            <div className="person">
-              <div
-                className="avatar avatar-photo"
-                style={{ backgroundImage: "url('/avatars/jhinresh.jpg')" }}
-                aria-label="jhinresh profile picture"
+            <article className="person">
+              <Image
+                src="/avatars/jhinresh.jpg"
+                alt="Jhinresh profile picture"
+                width={104}
+                height={104}
+                loading="eager"
               />
-              <div className="name">— jhinresh</div>
-              <div className="role">builder / product</div>
-              <div className="links">
-                <a href="https://github.com/JhiNResH" target="_blank" rel="noopener noreferrer">→ github</a>
-                <a href="https://x.com/JhiNResH" target="_blank" rel="noopener noreferrer">→ x / twitter</a>
+              <div>
+                <h3>jhinresh</h3>
+                <p>builder / product</p>
+                <div className="person-links">
+                  <a href="https://github.com/JhiNResH" target="_blank" rel="noopener noreferrer">
+                    github
+                  </a>
+                  <a href="https://x.com/JhiNResH" target="_blank" rel="noopener noreferrer">
+                    x
+                  </a>
+                </div>
               </div>
-            </div>
-            <div className="person">
-              <div
-                className="avatar avatar-photo"
-                style={{ backgroundImage: "url('/avatars/ezven.jpg')" }}
-                aria-label="ezven profile picture"
+            </article>
+
+            <article className="person">
+              <Image
+                src="/avatars/ezven.jpg"
+                alt="Ezven profile picture"
+                width={104}
+                height={104}
+                loading="eager"
               />
-              <div className="name">— ezven</div>
-              <div className="role">builder / product</div>
-              <div className="links">
-                <a href="https://x.com/ezveng" target="_blank" rel="noopener noreferrer">→ x / twitter</a>
-                <a href="https://github.com/Ferxxo-pa" target="_blank" rel="noopener noreferrer">→ github</a>
+              <div>
+                <h3>ezven</h3>
+                <p>builder / product</p>
+                <div className="person-links">
+                  <a href="https://github.com/Ferxxo-pa" target="_blank" rel="noopener noreferrer">
+                    github
+                  </a>
+                  <a href="https://x.com/ezveng" target="_blank" rel="noopener noreferrer">
+                    x
+                  </a>
+                </div>
               </div>
-            </div>
+            </article>
           </div>
         </div>
       </section>
 
       <footer className="foot">
-        <div>© jeezlabs 2024— · product index</div>
+        <span>jeezlabs / product index</span>
         <div className="foot-links">
-          <span>built by two friends, shipped in public</span>
-          <a href="https://x.com/0xmaiat" target="_blank" rel="noopener noreferrer">→ @0xmaiat</a>
+          <span>built in public</span>
+          <a href="https://x.com/0xmaiat" target="_blank" rel="noopener noreferrer">
+            @0xmaiat
+          </a>
         </div>
       </footer>
-
-      {/* tweaks panel */}
-      <div className={`tweaks-panel${tweaksOpen ? " open" : ""}`}>
-        <h4><span>tweaks</span><span style={{ color: "var(--dim)" }}>jzl/cfg</span></h4>
-
-        <div className="tweak">
-          <label>theme</label>
-          <div className="row">
-            {(["dark", "paper"] as Theme[]).map(v => (
-              <button key={v} className={`opt${state.theme === v ? " active" : ""}`} onClick={() => set("theme", v)}>{v}</button>
-            ))}
-          </div>
-        </div>
-
-        <div className="tweak">
-          <label>hero arrangement</label>
-          <div className="row">
-            {(["pile", "spiral", "grid"] as Arrangement[]).map(v => (
-              <button key={v} className={`opt${state.arrangement === v ? " active" : ""}`} onClick={() => set("arrangement", v)}>{v}</button>
-            ))}
-          </div>
-        </div>
-
-        <div className="tweak">
-          <label>accent</label>
-          <div className="row">
-            {([["#d9ff4b", "lime"], ["#ff5a3c", "red"], ["#8ab4ff", "blue"], ["#e8e2d3", "bone"]] as [string, string][]).map(([val, label]) => (
-              <button key={val} className={`opt${state.accent === val ? " active" : ""}`} onClick={() => set("accent", val)}>{label}</button>
-            ))}
-          </div>
-        </div>
-
-        <div className="tweak">
-          <label>hero focus</label>
-          <div className="row">
-            {(["full", "minimal"] as Focus[]).map(v => (
-              <button key={v} className={`opt${state.focus === v ? " active" : ""}`} onClick={() => set("focus", v)}>{v}</button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </>
+    </main>
   );
 }

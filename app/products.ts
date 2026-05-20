@@ -21,6 +21,27 @@ export interface Product {
 
 export const PRODUCTS: Product[] = [
   {
+    slug: "gimi",
+    t: "Gimi",
+    k: "agentic rentals",
+    y: "2026",
+    s: "shipped",
+    art: "art-8",
+    desc: "Award-winning AI rental agent for school, community, and hackathon inventory.",
+    repo: "https://github.com/clawdez/Gimi",
+    hackathon: "hackathon winner",
+    previewImage: "/previews/gimi.png",
+    preview: {
+      lead: "Gimi is an agentic rental marketplace with Solana settlement built in: ask for a nearby item, fund escrow, hold a temporary rental token, return the item, and leave a receipt-backed outcome.",
+      notes: [
+        "AI-guided inventory search and rental checkout",
+        "Solana escrow, metered rent accrual, rental-token state, and receipt events",
+        "LI.FI funding quotes, ElevenLabs tools, Privy wallet onboarding, and MCP-style rental tools",
+        "Award-winning hackathon build by jeezlabs",
+      ],
+    },
+  },
+  {
     slug: "pincher",
     t: "Pincher",
     k: "carpool matcher agent",
@@ -119,6 +140,7 @@ export const PRODUCTS: Product[] = [
     art: "art-5",
     desc: "Automated law review scanner. Upload a manuscript, get instant style violation flags with exact rule citations.",
     builtBy: "ezven",
+    href: "http://redlineai.xyz/",
     previewImage: "/previews/redlineai.png",
     preview: {
       lead: "Scan your law review paper for style violations instantly. Supports PDF, DOCX, and plain text. 61+ rules with AI-powered context-aware detection.",
@@ -133,18 +155,23 @@ export const PRODUCTS: Product[] = [
   {
     slug: "dojo",
     t: "Dojo",
-    k: "skill marketplace",
+    k: "NFA marketplace",
     y: "2026",
     s: "live",
     art: "art-2",
-    desc: "AI skill marketplace with a newspaper-style product surface.",
+    desc: "Marketplace for agent collections, NFA service cards, and receipt-backed reputation.",
     hackathon: "hackathon winner",
     href: "https://maiat-dojo.vercel.app",
     repo: "https://github.com/JhiNResH/maiat-dojo",
     previewImage: "/previews/dojo.png",
     preview: {
-      lead: "A market surface for discovering, packaging, and shipping agent skills with an editorial feel.",
-      notes: ["Newspaper-style interface", "Skill discovery and browsing", "Built for fast iteration"],
+      lead: "The Dojo is an NFA marketplace for collecting, hiring, running, subscribing to, and forking agent services with receipts, lineage, and service access on each card.",
+      notes: [
+        "Browse agent collections and individual NFAs",
+        "Inspect abilities, receipts, lineage, and reputation stats",
+        "Run, subscribe to, or fork agent service cards",
+        "Built for Maiat-style agent reputation and service access",
+      ],
     },
   },
   {

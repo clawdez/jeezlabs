@@ -91,7 +91,7 @@ export default function Home() {
         <div className="right">
           <a href="#works">products</a>
           <a href="#about">about</a>
-          <a href="#contact">contact</a>
+          <a href="https://x.com/0xmaiat" target="_blank" rel="noopener noreferrer">x</a>
           <span style={{ color: "var(--dim)" }}>living archive</span>
         </div>
       </div>
@@ -218,7 +218,7 @@ export default function Home() {
               <div className={`status ${w.s}`}><span className="dot-mini" />{STATUS_LABEL[w.s]}</div>
               <div className="arrow">→</div>
               <div
-                className={`work-preview ${w.art}`}
+                className={`work-preview ${w.k.startsWith("ios ") ? "app-work-preview" : ""} ${w.art}`}
                 style={w.previewImage ? { backgroundImage: `url(${w.previewImage})` } : undefined}
                 aria-hidden="true"
               />
@@ -231,6 +231,17 @@ export default function Home() {
       <section className="about" id="about">
         <div>
           <h2>two <em>friends.</em><br />one <em>lab.</em><br />many <em>small</em> products.</h2>
+          <a
+            className="social-embed"
+            href="https://x.com/virtuals_io/status/2032005346185920557?s=20"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Virtuals post about JeezLabs on X"
+          >
+            <span className="social-embed-kicker">x / virtuals_io</span>
+            <span className="social-embed-title">JeezLabs on Virtuals</span>
+            <span className="social-embed-url">x.com/virtuals_io/status/2032005346185920557</span>
+          </a>
         </div>
         <div className="copy">
           <p>jeezlabs is a <em>two-person</em> product lab for internet software, protocol experiments, and small tools we want to see exist.</p>
@@ -238,16 +249,24 @@ export default function Home() {
           <p>some entries are live. some are still rough. all of them are part of the same habit: <em>build, ship, learn, repeat.</em></p>
           <div className="duo">
             <div className="person">
-              <div className="avatar" data-init="j" />
+              <div
+                className="avatar avatar-photo"
+                style={{ backgroundImage: "url('/avatars/jhinresh.jpg')" }}
+                aria-label="jhinresh profile picture"
+              />
               <div className="name">— jhinresh</div>
               <div className="role">builder / product</div>
               <div className="links">
                 <a href="https://github.com/JhiNResH" target="_blank" rel="noopener noreferrer">→ github</a>
-                <a href="mailto:hey@jeezlabs.io">→ email</a>
+                <a href="https://x.com/JhiNResH" target="_blank" rel="noopener noreferrer">→ x / twitter</a>
               </div>
             </div>
             <div className="person">
-              <div className="avatar" data-init="e" />
+              <div
+                className="avatar avatar-photo"
+                style={{ backgroundImage: "url('/avatars/ezven.jpg')" }}
+                aria-label="ezven profile picture"
+              />
               <div className="name">— ezven</div>
               <div className="role">builder / product</div>
               <div className="links">
@@ -259,15 +278,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* contact */}
-      <section className="contact" id="contact">
-        <div className="line">small products,<br /><em>kept in public.</em></div>
-        <a href="mailto:hey@jeezlabs.io" className="email">hey@jeezlabs.io</a>
-      </section>
-
       <footer className="foot">
         <div>© jeezlabs 2024— · product index</div>
-        <div>built by two friends, shipped in public</div>
+        <div className="foot-links">
+          <span>built by two friends, shipped in public</span>
+          <a href="https://x.com/0xmaiat" target="_blank" rel="noopener noreferrer">→ @0xmaiat</a>
+        </div>
       </footer>
 
       {/* tweaks panel */}

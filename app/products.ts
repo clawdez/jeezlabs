@@ -28,6 +28,7 @@ export const PRODUCTS: Product[] = [
     s: "shipped",
     art: "art-8",
     desc: "Award-winning AI rental agent for school, community, and hackathon inventory.",
+    href: "https://gimi-pr18.vercel.app/",
     repo: "https://github.com/clawdez/Gimi",
     hackathon: "hackathon winner",
     previewImage: "/previews/gimi.png",
@@ -253,7 +254,3 @@ export const STATUS_LABEL: Record<ProductStatus, string> = {
   shipped: "shipped",
   paused: "paused",
 };
-
-export function getProductBySlug(slug: string) {
-  return PRODUCTS.find((product) => product.slug === slug);
-}

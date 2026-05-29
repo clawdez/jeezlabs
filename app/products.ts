@@ -211,7 +211,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "wanderly",
-    t: "Wanderly",
+    t: "SAV-E",
     k: "ios travel app",
     y: "2026",
     s: "building",
@@ -221,7 +221,7 @@ export const PRODUCTS: Product[] = [
     repo: "https://github.com/JhiNResH/wanderly",
     previewImage: "/previews/wanderly.png",
     preview: {
-      lead: "Save places from Instagram, Threads, Xiaohongshu, or any app; Wanderly extracts place details, pins them to a personal map, and helps plan trips.",
+      lead: "Save places from Instagram, Threads, Xiaohongshu, or any app; SAV-E extracts place details, pins them to a personal map, and helps plan trips.",
       notes: [
         "AI place extraction from shared links and images",
         "MapKit place map, place lists, and trip planning",

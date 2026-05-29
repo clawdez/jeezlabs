@@ -177,7 +177,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "jiagon",
-    t: "Jiagon",
+    t: "SKLL-R",
     k: "verified reviews",
     y: "2026",
     s: "live",
@@ -185,7 +185,7 @@ export const PRODUCTS: Product[] = [
     desc: "Receipt-gated review prototype backed by onchain payment proofs.",
     builtBy: "jhinresh",
     href: "https://jiagon.vercel.app",
-    repo: "https://github.com/JhiNResH/jiagon",
+    repo: "https://github.com/JhiNResH/SLL-R",
     previewImage: "/previews/jiagon.png",
     preview: {
       lead: "A verified-review experiment where payment proof and product feedback sit in the same flow.",

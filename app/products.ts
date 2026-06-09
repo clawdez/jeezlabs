@@ -27,15 +27,13 @@ export const PRODUCTS: Product[] = [
     y: "2026",
     s: "building",
     art: "art-6",
-    desc: "Know when your whole group is ready to go. Share a link, everyone taps in, dip when it's time.",
+    desc: "Real-time group readiness check. Share a link, everyone taps in, dip when it's time.",
     builtBy: "ezven",
-    repo: "https://github.com/jeez-labs/dip",
     preview: {
-      lead: "Group coordination made dead simple — share a link, everyone signals ready, and you all dip together.",
+      lead: "A real-time group coordination tool. Share a link, everyone signals ready, and you dip together.",
       notes: [
         "Real-time group readiness signals",
         "Shareable link — no app download needed",
-        "Bilingual (English / Spanish)",
         "Built by ezven",
       ],
     },

@@ -239,6 +239,15 @@ section.slab { position: relative; border-top: 1px solid var(--dimmer); padding:
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
+.work-row .title-row {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+}
+.work-row .hackathon-badge {
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--bg); background: var(--warn);
+  padding: 1px 6px; border-radius: 3px;
+  white-space: nowrap;
+}
 .work-row .kind, .work-row .year, .work-row .status {
   font-size: 11px; color: var(--dim); letter-spacing: 0.08em; text-transform: uppercase;
 }

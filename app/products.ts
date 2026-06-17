@@ -29,6 +29,7 @@ export const PRODUCTS: Product[] = [
     art: "art-6",
     desc: "Real-time group readiness check. Share a link, everyone taps in, dip when it's time.",
     builtBy: "ezven",
+    href: "https://dip-neon-three.vercel.app",
     preview: {
       lead: "A real-time group coordination tool. Share a link, everyone signals ready, and you dip together.",
       notes: [
@@ -91,6 +92,7 @@ export const PRODUCTS: Product[] = [
     art: "art-3",
     desc: "See who's down to play ping pong right now. Signal your status, get pinged when others are ready.",
     builtBy: "ezven",
+    href: "https://usepingme.com",
     repo: "https://github.com/Ferxxo-pa/pingme",
     previewImage: "/previews/pingme.png",
     preview: {

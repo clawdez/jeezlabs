@@ -21,6 +21,24 @@ export interface Product {
 
 export const PRODUCTS: Product[] = [
   {
+    slug: "dip",
+    t: "DIP",
+    k: "group coordination",
+    y: "2026",
+    s: "building",
+    art: "art-6",
+    desc: "Real-time group readiness check. Share a link, everyone taps in, dip when it's time.",
+    builtBy: "ezven",
+    preview: {
+      lead: "A real-time group coordination tool. Share a link, everyone signals ready, and you dip together.",
+      notes: [
+        "Real-time group readiness signals",
+        "Shareable link — no app download needed",
+        "Built by ezven",
+      ],
+    },
+  },
+  {
     slug: "gimi",
     t: "Gimi",
     k: "agentic rentals",
